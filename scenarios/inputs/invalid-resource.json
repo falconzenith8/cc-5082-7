@@ -1,0 +1,88 @@
+{
+  "id": "season-26-winter",
+  "timeZone": "Asia/Shanghai",
+  "defaults": {
+    "mapPoolId": "ranked"
+  },
+  "mapPool": {
+    "ranked": {
+      "maps": [
+        "neon-docks",
+        "highland-pass",
+        "frost-cavern"
+      ],
+      "defaultMap": "neon-docks"
+    },
+    "sprint": {
+      "maps": [
+        "neon-docks",
+        "highland-pass"
+      ],
+      "defaultMap": "neon-docks"
+    },
+    "climber": {
+      "maps": [
+        "highland-pass",
+        "frost-cavern"
+      ],
+      "defaultMap": "highland-pass"
+    },
+    "winter": {
+      "maps": [
+        "glacier-rift",
+        "neon-docks"
+      ],
+      "defaultMap": "glacier-rift"
+    }
+  },
+  "scoring": {
+    "base": 10,
+    "perMapBonus": {
+      "frost-cavern": 2
+    },
+    "categories": [
+      "sprint"
+    ]
+  },
+  "abilities": {
+    "defaultAllowed": true,
+    "allow": [],
+    "deny": []
+  },
+  "composition": {
+    "precedence": "newest",
+    "combine": "exclusive",
+    "allowTies": false,
+    "priority": [],
+    "exclusions": []
+  },
+  "schedule": {
+    "rounds": [
+      {
+        "id": "winter",
+        "startsAt": "2026-11-15T00:00:00",
+        "endsAt": "2026-11-16T00:00:00",
+        "mapPoolId": "winter",
+        "effects": [
+          {
+            "kind": "scoring",
+            "multiplier": 2
+          },
+          {
+            "kind": "ability",
+            "allow": [
+              "grapple-hook"
+            ],
+            "deny": []
+          }
+        ],
+        "requiresAbilities": [
+          "orbit-scan"
+        ]
+      }
+    ]
+  },
+  "publishedAt": "2026-11-14T00:00:00",
+  "effectiveFrom": "2026-11-15T00:00:00",
+  "displayName": "Winter Season — broken refs"
+}

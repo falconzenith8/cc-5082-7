@@ -1,0 +1,109 @@
+{
+  "id": "season-26-autumn",
+  "timeZone": "Asia/Shanghai",
+  "defaults": {
+    "mapPoolId": "ranked"
+  },
+  "mapPool": {
+    "ranked": {
+      "maps": [
+        "neon-docks",
+        "highland-pass",
+        "frost-cavern"
+      ],
+      "defaultMap": "neon-docks"
+    },
+    "sprint": {
+      "maps": [
+        "neon-docks",
+        "highland-pass"
+      ],
+      "defaultMap": "neon-docks"
+    },
+    "climber": {
+      "maps": [
+        "highland-pass",
+        "frost-cavern"
+      ],
+      "defaultMap": "highland-pass"
+    }
+  },
+  "scoring": {
+    "base": 10,
+    "perMapBonus": {
+      "frost-cavern": 2
+    },
+    "categories": [
+      "sprint"
+    ]
+  },
+  "abilities": {
+    "defaultAllowed": true,
+    "allow": [],
+    "deny": [
+      "drone"
+    ]
+  },
+  "composition": {
+    "precedence": "newest",
+    "combine": "exclusive",
+    "allowTies": false,
+    "priority": [],
+    "exclusions": []
+  },
+  "schedule": {
+    "rounds": [
+      {
+        "id": "sprint",
+        "name": "Sprint Weekend",
+        "startsAt": "2026-11-12T00:00:00",
+        "endsAt": "2026-11-13T00:00:00",
+        "mapPoolId": "sprint",
+        "winnerCondition": "score",
+        "effects": [
+          {
+            "kind": "scoring",
+            "multiplier": 1.75,
+            "label": "sprint-bonus-v2"
+          }
+        ],
+        "requiresAbilities": [
+          "blink"
+        ]
+      },
+      {
+        "id": "climber",
+        "name": "Climber Series",
+        "startsAt": "2026-11-13T00:00:00",
+        "endsAt": "2026-11-14T00:00:00",
+        "mapPoolId": "climber",
+        "winnerCondition": "score",
+        "effects": [
+          {
+            "kind": "scoring",
+            "multiplier": 0.8,
+            "label": "climb-handicap-v2"
+          },
+          {
+            "kind": "ability",
+            "allow": [],
+            "deny": [
+              "blink"
+            ],
+            "label": "no-blink"
+          }
+        ]
+      }
+    ]
+  },
+  "publishedAt": "2026-11-12T12:00:00",
+  "effectiveFrom": "2026-11-13T00:00:00",
+  "displayName": "Autumn Season — v2 (same name family)",
+  "notes": "v2 changed: climber 0.5x -> 0.8x, sprint 1.5x -> 1.75x, drone locked",
+  "options": {
+    "basePoints": 10,
+    "sprintMultiplier": 1.75,
+    "climberMultiplier": 0.8,
+    "droneLocked": true
+  }
+}

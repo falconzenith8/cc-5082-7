@@ -1,0 +1,14 @@
+{
+  "name": "season-rules-assembler",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Versioned, time-zone aware season rule package assembler and runtime",
+  "scripts": {
+    "test": "node --test test/*.test.js",
+    "demo": "node demo.js"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

@@ -1,0 +1,184 @@
+import {
+  activeRoundsAt,
+  stackResolution,
+  scoringMultiplier,
+  effectiveMapRules,
+  baseMapRules,
+  effectiveAbilities,
+} from "./rules.js";
+import { PackageError } from "./package.js";
+import { fingerprint, canonicalJson } from "./fingerprint.js";
+import { formatLocal } from "./time.js";
+
+/**
+ * Pin a package to a match by identity digest, resolving it through the store
+ * (live versioning) or through a history index (rollback/archive). The pin is
+ * verified to still be the exact content that was frozen when the match was
+ * created; a failed verification means the rules were mutated and the match
+ * cannot safely continue.
+ */
+export function pinPackage(entry) {
+  return {
+    version: entry.version,
+    digest: entry.digest,
+    packageId: entry.pkg.id,
+    timeZone: entry.pkg.timeZone,
+    title: entry.displayName,
+    summary: entry.summary ?? null,
+    core: entry.pkg,
+    catalog: entry.catalog,
+    catalogDigest: entry.catalogDigest,
+    effectiveFrom: entry.effectiveFrom,
+    pinFingerprint: fingerprint(canonicalJson(entry.pkg)),
+  };
+}
+
+export function verifyPin(pin) {
+  const actual = fingerprint(canonicalJson(pin.core));
+  if (actual !== pin.pinFingerprint) {
+    return {
+      ok: false,
+      code: "MATCH_PIN_TAMPERED",
+      message: `match pin for ${pin.packageId} no longer matches its frozen content`,
+      expected: pin.pinFingerprint,
+      actual,
+    };
+  }
+  return { ok: true };
+}
+
+/**
+ * Match state is authoritative for scoring: points are added to the match's own
+ * ledger as reported, and the rule package only ever explains future scoring.
+ * A version released mid-match therefore cannot retroactively alter results.
+ */
+export class Match {
+  constructor({ matchId, pin, createdAt, now, basePoints, roundId = null, roundRules = null, events = [], mapRules = null }) {
+    const verified = verifyPin(pin);
+    if (!verified.ok) throw new PackageError(verified.code, verified.message, verified);
+    this.matchId = matchId;
+    this.pin = pin;
+    this.createdAt = createdAt;
+    this.createdAtLocal = formatLocal(createdAt, pin.timeZone);
+    this.pinnedTo = pin.digest;
+    this.mapRules = mapRules;
+    this.basePoints = basePoints;
+    this.roundId = roundId;
+    this.roundRules = roundRules;
+    this.scores = { a: 0, b: 0 };
+    this.events = [];
+    this.status = "live";
+    for (const event of events) this.record(event, { now });
+  }
+
+  /**
+   * Round rules in effect for this match: a round boundary does not move an
+   * already-created match. The match's round binding is fixed at creation.
+   */
+  effectiveRound() {
+    if (this.roundRules) return this.roundRules;
+    const rounds = activeRoundsAt(this.pin.core, this.createdAt);
+    if (rounds.length === 0) return { rounds, resolution: stackResolution(this.pin.core, rounds) };
+    return { rounds, resolution: stackResolution(this.pin.core, rounds) };
+  }
+
+  rulesView() {
+    const round = this.effectiveRound();
+    const winner = round?.resolution?.winners?.[0] ?? null;
+    const mapRules = this.mapRules ?? (winner ? effectiveMapRules(this.pin.core, winner) : baseMapRules(this.pin.core));
+    const abilities = effectiveAbilities(this.pin.core, this.pin.catalog, winner ?? null);
+    const multiplier = round
+      ? scoringMultiplier(this.pin.core, round.resolution.compatible ? round.resolution.winners : round.rounds)
+      : { multiplier: 1, stacking: { compatible: true, reason: null }, contributors: [], effect: "base" };
+    return {
+      roundId: winner?.id ?? null,
+      activeRounds: (round?.rounds ?? []).map((entry) => entry.id),
+      stacking: round?.resolution ?? null,
+      mapRules,
+      allowedAbilities: abilities,
+      allowedMaps: mapRules.allowedMaps,
+      defaultMap: mapRules.defaultMap,
+      multiplier: multiplier.multiplier,
+      winnerCondition: winner?.winnerCondition ?? null,
+      packageDigest: this.pin.digest,
+      packageVersion: this.pin.version,
+    };
+  }
+
+  /**
+   * Report a map result. Scoring state is committed to the match ledger at
+   * report time using the match's pinned package; it is never recomputed from
+   * whatever package happens to be current later.
+   */
+  record(event, { now } = {}) {
+    if (this.status !== "live") {
+      throw new PackageError("MATCH_CLOSED", `match ${this.matchId} is ${this.status}`);
+    }
+    if (!event || typeof event !== "object") {
+      throw new PackageError("MATCH_EVENT_SHAPE", "match event must be an object");
+    }
+    const at = now ?? event.at ?? this.createdAt;
+    if (event.kind !== "map-result") {
+      throw new PackageError("MATCH_EVENT_KIND", `unsupported match event ${event.kind}`);
+    }
+    if (event.side !== "a" && event.side !== "b") {
+      throw new PackageError("MATCH_EVENT_SIDE", `map-result side must be a or b`);
+    }
+    const view = this.rulesView();
+    if (!view.mapRules.valid) {
+      throw new PackageError("MATCH_MAP_RULES_INVALID", `match ${this.matchId} has no playable map rules`, {
+        reason: view.mapRules.reason,
+      });
+    }
+    if (!view.allowedMaps.includes(event.mapId)) {
+      throw new PackageError("MATCH_MAP_NOT_ALLOWED", `map ${event.mapId} is not allowed by the pinned rules`, {
+        mapId: event.mapId,
+        allowedMaps: view.allowedMaps,
+      });
+    }
+    if (event.abilityId !== undefined && !view.allowedAbilities.includes(event.abilityId)) {
+      throw new PackageError("MATCH_ABILITY_NOT_ALLOWED", `ability ${event.abilityId} is not allowed by the pinned rules`, {
+        abilityId: event.abilityId,
+        allowedAbilities: view.allowedAbilities,
+      });
+    }
+    const scoring = scoringMultiplier(
+      this.pin.core,
+      view.roundId ? view.stacking?.winners ?? activeRoundsAt(this.pin.core, this.createdAt) : [],
+    );
+    if (!scoring.stacking.compatible) {
+      throw new PackageError("MATCH_STACK_BLOCKED", `pinned rules block the overlap of ${view.activeRounds.join(", ")}`, {
+        reason: scoring.stacking.reason,
+      });
+    }
+    const base = event.basePoints ?? this.basePoints ?? this.pin.core.scoring.base;
+    const bonus = this.pin.core.scoring.perMapBonus[event.mapId] ?? 0;
+    const points = Number((base * scoring.multiplier + bonus).toFixed(2));
+    this.scores[event.side] = Number((this.scores[event.side] + points).toFixed(2));
+    const record = {
+      seq: this.events.length + 1,
+      at,
+      atLocal: formatLocal(at, this.pin.timeZone),
+      kind: event.kind,
+      side: event.side,
+      mapId: event.mapId,
+      abilityId: event.abilityId ?? null,
+      basePoints: base,
+      multiplier: scoring.multiplier,
+      perMapBonus: bonus,
+      points,
+      multiplierSource: scoring.effect,
+      contributingRounds: scoring.contributors,
+      packageVersion: this.pin.version,
+      packageDigest: this.pin.digest,
+    };
+    this.events.push(Object.freeze(record));
+    return record;
+  }
+
+  close({ outcome = "final" } = {}) {
+    if (this.status === "live") this.status = outcome;
+    return this.status;
+  }
+}
+

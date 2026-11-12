@@ -1,0 +1,60 @@
+{
+  "format": "season-content",
+  "schemaVersion": 1,
+  "maps": {
+    "neon-docks": {
+      "contentId": "neon-docks",
+      "name": "Neon Docks",
+      "revision": 3,
+      "tags": [
+        "urban",
+        "sprint"
+      ]
+    },
+    "highland-pass": {
+      "contentId": "highland-pass",
+      "name": "Highland Pass",
+      "revision": 2,
+      "tags": [
+        "outdoor",
+        "climber"
+      ]
+    },
+    "frost-cavern": {
+      "contentId": "frost-cavern",
+      "name": "Frost Cavern",
+      "revision": 1,
+      "tags": [
+        "outdoor",
+        "climber",
+        "winter"
+      ]
+    }
+  },
+  "abilities": {
+    "blink": {
+      "contentId": "blink",
+      "name": "Blink",
+      "revision": 2,
+      "tags": [
+        "mobility"
+      ]
+    },
+    "shield": {
+      "contentId": "shield",
+      "name": "Shield Projector",
+      "revision": 1,
+      "tags": [
+        "defense"
+      ]
+    },
+    "drone": {
+      "contentId": "drone",
+      "name": "Recon Drone",
+      "revision": 2,
+      "tags": [
+        "utility"
+      ]
+    }
+  }
+}

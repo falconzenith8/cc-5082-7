@@ -1,0 +1,85 @@
+{
+  "id": "season-26-overlap",
+  "timeZone": "Asia/Shanghai",
+  "defaults": {
+    "mapPoolId": "ranked"
+  },
+  "mapPool": {
+    "ranked": {
+      "maps": [
+        "neon-docks",
+        "highland-pass",
+        "frost-cavern"
+      ],
+      "defaultMap": "neon-docks"
+    },
+    "sprint": {
+      "maps": [
+        "neon-docks",
+        "highland-pass"
+      ],
+      "defaultMap": "neon-docks"
+    },
+    "climber": {
+      "maps": [
+        "highland-pass",
+        "frost-cavern"
+      ],
+      "defaultMap": "highland-pass"
+    }
+  },
+  "scoring": {
+    "base": 10,
+    "perMapBonus": {
+      "frost-cavern": 2
+    },
+    "categories": [
+      "sprint"
+    ]
+  },
+  "abilities": {
+    "defaultAllowed": true,
+    "allow": [],
+    "deny": []
+  },
+  "composition": {
+    "precedence": "newest",
+    "combine": "exclusive",
+    "allowTies": false,
+    "priority": [],
+    "exclusions": []
+  },
+  "schedule": {
+    "rounds": [
+      {
+        "id": "sprint",
+        "name": "Sprint Weekend",
+        "startsAt": "2026-11-12T00:00:00",
+        "endsAt": "2026-11-13T00:00:00",
+        "mapPoolId": "sprint",
+        "effects": [
+          {
+            "kind": "scoring",
+            "multiplier": 1.5
+          }
+        ]
+      },
+      {
+        "id": "climber",
+        "name": "Climber Series",
+        "startsAt": "2026-11-12T00:00:00",
+        "endsAt": "2026-11-14T00:00:00",
+        "mapPoolId": "climber",
+        "effects": [
+          {
+            "kind": "scoring",
+            "multiplier": 0.5
+          }
+        ]
+      }
+    ]
+  },
+  "publishedAt": "2026-11-10T00:00:00Z",
+  "effectiveFrom": "2026-11-12T00:00:00",
+  "displayName": "Overlap — unresolved"
+}
