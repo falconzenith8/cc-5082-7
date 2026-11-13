@@ -1,6 +1,6 @@
-import { explainSelection } from "../src/store.js";
-import { packageDigestMatches } from "../src/package.js";
-import { formatLocal } from "../src/time.js";
+import { explainSelection } from "./store.js";
+import { packageDigestMatches } from "./package.js";
+import { formatLocal } from "../time/civil.js";
 
 /**
  * Digest-backed selection summary. Identity comes from the package content and

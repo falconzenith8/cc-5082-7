@@ -1,7 +1,9 @@
-import { SeasonEngine, inspectAssembledPackage } from "../src/engine.js";
-import { VirtualClock, resolveLocal, formatLocal } from "../src/time.js";
-import { describeSelection, compareEntries } from "../src/report.js";
-import { assemblePackage } from "../src/normalize.js";
+import { SeasonEngine } from "../src/runtime/engine.js";
+import { inspectAssembledPackage } from "../src/runtime/inspect.js";
+import { VirtualClock } from "../src/time/clock.js";
+import { resolveLocal, formatLocal } from "../src/time/civil.js";
+import { describeSelection, compareEntries } from "../src/runtime/report.js";
+import { assemblePackage } from "../src/compose/assemble.js";
 import { normalizeCatalog } from "../src/catalog.js";
 import { canonicalize } from "../src/fingerprint.js";
 import {
@@ -38,7 +40,7 @@ trace.standaloneAssemble = {
 };
 
 // 2. Engine publication and boundary selection.
-const engine = new SeasonEngine({ catalog, clock: new VirtualClock("2026-11-09T00:00:00Z") });
+const engine = new SeasonEngine({ catalog, timeSource: new VirtualClock("2026-11-09T00:00:00Z") });
 engine.skipTo("2026-11-10T00:00:00Z", { matchIds: [] });
 const p1 = engine.publish(v1);
 trace.publishV1 = {
@@ -60,22 +62,22 @@ const bad = engine.publish(invalidResourcePackage);
 trace.refusals = {
   invalidResource: { status: bad.status, reasonCodes: bad.reasonCodes, errors: bad.errors },
   unresolvedOverlap: (() => {
-    const e = new SeasonEngine({ catalog, clock: new VirtualClock("2026-11-09T00:00:00Z") });
+    const e = new SeasonEngine({ catalog, timeSource: new VirtualClock("2026-11-09T00:00:00Z") });
     const r = e.publish(unresolvedOverlapPackage, { now: Date.parse("2026-11-10T00:00:00Z") });
     return { status: r.status, reasonCodes: r.reasonCodes, errors: r.errors };
   })(),
   priorityOverlap: (() => {
-    const e = new SeasonEngine({ catalog, clock: new VirtualClock("2026-11-09T00:00:00Z") });
+    const e = new SeasonEngine({ catalog, timeSource: new VirtualClock("2026-11-09T00:00:00Z") });
     const r = e.publish(resolvedOverlapPackage, { now: Date.parse("2026-11-10T00:00:00Z") });
     return { status: r.status, version: r.version ?? null, warnings: r.warnings ?? [] };
   })(),
   excludedOverlap: (() => {
-    const e = new SeasonEngine({ catalog, clock: new VirtualClock("2026-11-09T00:00:00Z") });
+    const e = new SeasonEngine({ catalog, timeSource: new VirtualClock("2026-11-09T00:00:00Z") });
     const r = e.publish(excludedOverlapPackage, { now: Date.parse("2026-11-10T00:00:00Z") });
     return { status: r.status, version: r.version ?? null, warnings: r.warnings ?? [] };
   })(),
   gapPackage: (() => {
-    const e = new SeasonEngine({ catalog, clock: new VirtualClock("2026-11-09T00:00:00Z") });
+    const e = new SeasonEngine({ catalog, timeSource: new VirtualClock("2026-11-09T00:00:00Z") });
     const r = e.publish(gapPackage, { now: Date.parse("2026-11-10T00:00:00Z") });
     return { status: r.status, warnings: r.warnings ?? [] };
   })(),
@@ -111,7 +113,7 @@ trace.matches = {
     rulesView: engine.getMatch("beta").rulesView(),
   },
 };
-trace.comparison = engine.compareObservations("alpha", "beta", engine.clock.now());
+trace.comparison = engine.compareObservations("alpha", "beta", engine.timeSource.now());
 trace.inspect = {
   sprint: engine.inspectRulesAt("2026-11-12T20:00:00+08:00"),
   climber: engine.inspectRulesAt("2026-11-13T09:00:00+08:00"),
@@ -158,7 +160,7 @@ trace.summaries = {
   v2: describeSelection(engine.store, engine.store.get(2)),
   compare: compareEntries(engine.store, 1, 2),
 };
-trace.stateAt = engine.stateAt(engine.clock.now());
+trace.stateAt = engine.stateAt(engine.timeSource.now());
 trace.history = engine.history;
 trace.engineRefusals = engine.refusals;
 

@@ -1,13 +1,13 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 
-import { SeasonEngine } from "../src/engine.js";
-import { VirtualClock } from "../src/time.js";
-import { describeTimeline } from "../src/timeline.js";
+import { SeasonEngine } from "../src/runtime/engine.js";
+import { VirtualClock } from "../src/time/clock.js";
+import { describeTimeline } from "../src/runtime/timeline.js";
 import { catalog, v1, v2 } from "../scenarios/scenario.js";
 
 function prepare() {
-  const engine = new SeasonEngine({ catalog, clock: new VirtualClock("2026-11-09T00:00:00Z") });
+  const engine = new SeasonEngine({ catalog, timeSource: new VirtualClock("2026-11-09T00:00:00Z") });
   engine.skipTo("2026-11-10T00:00:00Z", { matchIds: [] });
   assert.equal(engine.publish(v1).status, "published");
   engine.skipTo("2026-11-12T20:00:00+08:00", { matchIds: [] });

@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>赛季规则 · 对局操作界面</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <header>
+    <h1>赛季规则 · 对局操作界面</h1>
+    <div class="clock">
+      <span>引擎时刻 <strong id="now">—</strong></span>
+      <input id="skip-to" type="text" placeholder="2026-11-13T00:00:00+08:00" />
+      <button id="skip-btn">快进赛程</button>
+    </div>
+  </header>
+
+  <main>
+    <section id="season-panel" class="panel">
+      <h2>赛季规则</h2>
+      <div class="row">
+        <select id="scenario-select"></select>
+        <button id="load-scenario">载入示例包</button>
+        <button id="publish-btn">发布规则包</button>
+      </div>
+      <textarea id="package-json" spellcheck="false" placeholder="规则包 JSON"></textarea>
+      <div class="row">
+        <input id="inspect-at" type="text" placeholder="调查时刻 2026-11-13T09:00:00+08:00" />
+        <button id="inspect-btn">调查该时刻规则</button>
+      </div>
+      <div id="diagnostics" class="diagnostics" hidden></div>
+      <h3>已发布版本</h3>
+      <table id="versions">
+        <thead><tr><th>版本</th><th>摘要</th><th>名称</th><th>生效边界</th></tr></thead>
+        <tbody></tbody>
+      </table>
+      <h3>调查 / 发布结果</h3>
+      <pre id="inspect-result">（无）</pre>
+    </section>
+
+    <section id="match-panel" class="panel">
+      <h2>对局操作</h2>
+      <div class="row">
+        <input id="match-id" type="text" placeholder="对局 ID（如 alpha）" />
+        <button id="create-match-btn">按当前时刻创建对局</button>
+      </div>
+      <div id="matches"></div>
+    </section>
+  </main>
+
+  <script type="module" src="/app.js"></script>
+</body>
+</html>

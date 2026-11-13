@@ -1,16 +1,16 @@
-import { fingerprint } from "./fingerprint.js";
-import { PackageError, sealPackage } from "./package.js";
-import { isValidTimeZone, parseWhen, civilIso } from "./time.js";
-import { normalizeCatalog, lookupDefinition } from "./catalog.js";
-import { roundsOverlap, stackResolution, effectiveAbilities, effectiveMapRules } from "./rules.js";
+import { fingerprint } from "../fingerprint.js";
+import { PackageError } from "../runtime/package.js";
+import { isValidTimeZone, parseWhen } from "../time/civil.js";
+import { parseRoundWindow, analyzeSchedule, roundsOverlap, fail, notice } from "../time/schedule.js";
+import { normalizeCatalog, lookupDefinition } from "../catalog.js";
+import { stackResolution } from "../runtime/rules.js";
+import { collectMissingReferences, missingReferenceIssue, checkPlayableSets } from "./constraints.js";
+import { summarizeInputs } from "./summary.js";
 
 const ID_RE = /^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$/;
 const PRECEDENCE = new Set(["newest", "oldest", "declared"]);
 const COMBINE = new Set(["exclusive", "multiply"]);
 const ROUND_EFFECT_KINDS = new Set(["scoring", "map", "ability"]);
-
-const fail = (code, message, details = {}) => ({ severity: "error", code, message, details });
-const notice = (code, message, details = {}) => ({ severity: "warning", code, message, details });
 
 function readArray(value, path, issues) {
   if (value === undefined) return [];
@@ -60,6 +60,10 @@ function difference(a, b) {
  * Returns { ok, core, catalog, warnings, errors, summaryInputs }.
  * `core` is the input-only package content that gets sealed; it never embeds
  * derived state and never embeds the content catalog snapshot.
+ *
+ * Round time windows come from the schedule layer (../time/schedule.js);
+ * resource constraints from ./constraints.js; input summaries from
+ * ./summary.js. Issue order is part of the diagnostics contract.
  */
 export function normalizePackage(raw, { label = "", catalog, catalogDigest } = {}) {
   const issues = [];
@@ -239,37 +243,14 @@ export function normalizePackage(raw, { label = "", catalog, catalogDigest } = {
     }
     roundIds.add(roundId);
 
-    const starts = parseWhen(roundRaw.startsAt, timeZone);
-    let startsAtInstant = starts.instant;
-    if (starts.status === "nonexistent") {
-      issues.push(fail("ROUND_START_NONEXISTENT", `${path}.startsAt does not exist in ${timeZone}`, { local: starts.civil }));
-    } else if (starts.status === "ambiguous") {
-      issues.push(notice("ROUND_START_AMBIGUOUS", `${path}.startsAt occurs twice in ${timeZone}; earliest kept`, {
-        local: starts.civil,
-        candidates: starts.candidates.map((instant) => new Date(instant).toISOString()),
-      }));
-    } else if (starts.status !== "ok") {
-      issues.push(fail("ROUND_START_INVALID", `${path}.startsAt is invalid`, { status: starts.status }));
-    }
-
-    let endsAtInstant = null;
-    if (roundRaw.endsAt !== undefined && roundRaw.endsAt !== null) {
-      const ends = parseWhen(roundRaw.endsAt, timeZone);
-      if (ends.status === "nonexistent") {
-        issues.push(fail("ROUND_END_NONEXISTENT", `${path}.endsAt does not exist in ${timeZone}`, { local: ends.civil }));
-      } else if (ends.status === "ambiguous") {
-        issues.push(notice("ROUND_END_AMBIGUOUS", `${path}.endsAt occurs twice in ${timeZone}; earliest kept`, {
-          local: ends.civil,
-        }));
-      } else if (ends.status !== "ok") {
-        issues.push(fail("ROUND_END_INVALID", `${path}.endsAt is invalid`, { status: ends.status }));
-      } else {
-        endsAtInstant = ends.instant;
-        if (startsAtInstant !== null && endsAtInstant <= startsAtInstant) {
-          issues.push(fail("ROUND_END_ORDER", `${path}.endsAt must be after startsAt`));
-        }
-      }
-    }
+    const window = parseRoundWindow(
+      { startsAt: roundRaw.startsAt, endsAt: roundRaw.endsAt },
+      timeZone,
+      { path },
+    );
+    issues.push(...window.issues);
+    const startsAtInstant = window.startsAtInstant;
+    const endsAtInstant = window.endsAtInstant;
 
     const mapPoolId = typeof roundRaw.mapPoolId === "string" ? roundRaw.mapPoolId.trim() : "";
     if (!mapPools[mapPoolId]) {
@@ -359,44 +340,10 @@ export function normalizePackage(raw, { label = "", catalog, catalogDigest } = {
     });
   }
 
-  // ---- reference integrity --------------------------------------------
-  const missing = [];
-  const catalogMaps = new Set(Object.keys(sourceCatalog.maps));
-  const catalogAbilities = new Set(Object.keys(sourceCatalog.abilities));
-  const checkRefs = (kind, entries, path) => {
-    for (const contentId of entries) {
-      if (kind === "map" ? !catalogMaps.has(contentId) : !catalogAbilities.has(contentId)) {
-        missing.push({ kind, contentId, path });
-      }
-    }
-  };
-  for (const [poolId, pool] of Object.entries(mapPools)) {
-    checkRefs("map", pool.maps, `mapPool.${poolId}.maps`);
-  }
-  checkRefs("ability", abilities.allow, "abilities.allow");
-  checkRefs("ability", abilities.deny, "abilities.deny");
-  for (const round of rounds) {
-    if (!mapPools[round.mapPoolId]) continue;
-    for (const effect of round.effects) {
-      if (effect.kind === "map") {
-        checkRefs("map", [...effect.allow, ...effect.deny, ...effect.require], `schedule.rounds.${round.id}.effects`);
-      }
-      if (effect.kind === "ability") {
-        checkRefs("ability", [...effect.allow, ...effect.deny], `schedule.rounds.${round.id}.effects`);
-      }
-    }
-    checkRefs("ability", round.abilityOverrides.allow, `schedule.rounds.${round.id}.abilityOverrides`);
-    checkRefs("ability", round.abilityOverrides.deny, `schedule.rounds.${round.id}.abilityOverrides`);
-    checkRefs("ability", round.requiresAbilities, `schedule.rounds.${round.id}.requiresAbilities`);
-  }
-  if (missing.length) {
-    issues.push(
-      fail("RESOURCE_REFERENCE_MISSING", `${prefix}package references content that is not defined`, {
-        missing,
-        catalogDigest: sourceCatalogDigest,
-      }),
-    );
-  }
+  // ---- reference integrity (resource constraints) ----------------------
+  const missing = collectMissingReferences({ mapPools, abilities, rounds, catalog: sourceCatalog });
+  const missingIssue = missingReferenceIssue(missing, { catalogDigest: sourceCatalogDigest, prefix });
+  if (missingIssue) issues.push(missingIssue);
 
   // ---- tag coverage ----------------------------------------------------
   // An unreferenced catalog tag is informational only; it is never an error.
@@ -430,42 +377,22 @@ export function normalizePackage(raw, { label = "", catalog, catalogDigest } = {
     }
   }
 
-  // ---- overlap / exclusivity / precedence -------------------------------
+  // ---- playable sets (resource constraints) ----------------------------
   // Packages are publish-time validated, and the runtime resolves stacks with
-  // the same functions used here. Any window pair that can be simultaneously
-  // active must be either excluded or deterministically resolved; otherwise the
-  // package would have match-time behaviour that depends on which round happens
-  // to be evaluated first, so assembly refuses it.
+  // the same functions used here.
   const baseCore = {
     schedule: { rounds },
     mapPool: mapPools,
     abilities,
     composition,
   };
+  issues.push(...checkPlayableSets({ rounds, core: baseCore, catalog: sourceCatalog, prefix }));
 
-  // A round whose effective ability set collapses to empty, or whose effective
-  // map set collapses to empty, cannot host a match; refuse it now rather than
-  // failing at match creation time.
-  for (const round of rounds) {
-    const allowedAbilities = effectiveAbilities(baseCore, sourceCatalog, round);
-    if (Object.keys(sourceCatalog.abilities).length > 0 && allowedAbilities.length === 0) {
-      issues.push(
-        fail("ABILITY_SET_EMPTY", `${prefix}round ${round.id} leaves no usable ability`, {
-          roundId: round.id,
-        }),
-      );
-    }
-    const mapRules = effectiveMapRules(baseCore, round);
-    if (mapRules.valid !== true && mapRules.reason === "NO_PLAYABLE_MAP") {
-      issues.push(
-        fail("MAP_SET_EMPTY", `${prefix}round ${round.id} leaves no playable map after restrictions`, {
-          roundId: round.id,
-          poolId: mapRules.poolId,
-        }),
-      );
-    }
-  }
-
+  // ---- overlap / exclusivity / precedence -------------------------------
+  // Any window pair that can be simultaneously active must be either excluded
+  // or deterministically resolved; otherwise the package would have match-time
+  // behaviour that depends on which round happens to be evaluated first, so
+  // assembly refuses it.
   const exclusionSet = new Set(composition.exclusions.map((pair) => `${pair.a}|${pair.b}`));
   const isExcluded = (a, b) => {
     const [x, y] = a < b ? [a, b] : [b, a];
@@ -533,64 +460,28 @@ export function normalizePackage(raw, { label = "", catalog, catalogDigest } = {
     }
   }
 
-  // ---- schedule gaps ---------------------------------------------------
-  let gapCount = 0;
-  const gaps = [];
-  const ordered = rounds
-    .filter((round) => round.startsAtInstant !== null && round.endsAtInstant !== null)
-    .sort((a, b) => a.startsAtInstant - b.startsAtInstant || a.id.localeCompare(b.id));
-  for (let i = 0; i + 1 < ordered.length; i += 1) {
-    const current = ordered[i];
-    const next = ordered[i + 1];
-    if (next.startsAtInstant > current.endsAtInstant) {
-      gapCount += 1;
-      const gap = {
-        afterRound: current.id,
-        beforeRound: next.id,
-        gapStart: new Date(current.endsAtInstant).toISOString(),
-        gapEnd: new Date(next.startsAtInstant).toISOString(),
-        gapStartLocal: civilIso(current.endsAtInstant, timeZone),
-        gapEndLocal: civilIso(next.startsAtInstant, timeZone),
-        coveredByDefaultPool: defaults.mapPoolId !== null,
-      };
-      gaps.push(gap);
-      issues.push(notice("SCHEDULE_GAP", `${prefix}no round covers the gap after ${current.id}`, gap));
-      if (defaults.mapPoolId === null) {
-        issues.push(
-          notice("SCHEDULE_GAP_NO_FALLBACK", `${prefix}gap after ${current.id} has no defaults.mapPoolId fallback`, {
-            afterRound: current.id,
-            beforeRound: next.id,
-          }),
-        );
-      }
-    }
-    if (next.startsAtInstant < current.endsAtInstant) {
-      issues.push(
-        notice("ROUND_WINDOW_OVERLAP", `${prefix}round ${next.id} starts before ${current.id} ends`, {
-          rounds: [current.id, next.id],
-        }),
-      );
-    }
-  }
-
-  const openEnded = rounds.filter((round) => round.startsAtInstant !== null && round.endsAtInstant === null);
-  const coverage = {
-    earliest: ordered.length ? ordered[0].startsAtInstant : null,
-    latest: ordered.length ? ordered[ordered.length - 1].endsAtInstant : null,
-    openEnded: openEnded.map((round) => round.id),
-    gaps: gaps.length,
+  // ---- schedule gaps (schedule layer) ----------------------------------
+  const analysis = analyzeSchedule(rounds, {
+    timeZone,
     hasFallbackPool: defaults.mapPoolId !== null,
-  };
+    prefix,
+  });
+  issues.push(...analysis.issues);
+  const gaps = analysis.gaps;
+  const coverage = analysis.coverage;
 
-  const summaryInputs = {
-    schedule: scheduleInputDigest(rounds, mapPools, timeZone),
-    defaults: fingerprint(defaults),
-    mapPool: fingerprint(mapPools),
-    scoring: fingerprint({ base: scoringBase, perMapBonus, categories: scoringCategories }),
-    abilities: fingerprint(abilities),
-    composition: fingerprint(composition),
+  const summaryInputs = summarizeInputs({
+    rounds,
+    mapPools,
+    timeZone,
+    defaults,
+    scoringBase,
+    perMapBonus,
+    scoringCategories,
+    abilities,
+    composition,
     catalogDigest: sourceCatalogDigest,
-  };
+  });
 
   const errors = issues.filter((issue) => issue.severity === "error");
   const warnings = issues.filter((issue) => issue.severity === "warning");
@@ -634,61 +525,9 @@ export function normalizePackage(raw, { label = "", catalog, catalogDigest } = {
     referencedTags: [...referencedTags].sort(),
     missing,
     overlap: { pairs: overlapCount, superseded: supersededCount, blocked: blockedCount },
-    gaps: gapCount,
+    gaps: gaps.length,
     gapDetails: gaps,
     coverage,
-  };
-}
-
-export function scheduleInputDigest(rounds, mapPools, timeZone) {
-  return fingerprint({
-    timeZone,
-    mapPool: mapPools,
-    rounds: rounds.map((round) => ({
-      id: round.id,
-      startsAt: round.startsAt,
-      endsAt: round.endsAt ?? null,
-      mapPoolId: round.mapPoolId,
-      winnerCondition: round.winnerCondition,
-      effects: round.effects,
-      abilityOverrides: round.abilityOverrides,
-      requiresAbilities: round.requiresAbilities,
-    })),
-  });
-}
-
-/**
- * Assemble (and seal) a package only when it is fully usable. Refusal is a
- * first-class result: callers receive diagnostics plus the exact refusal reason
- * codes, and no sealed package is produced.
- */
-export function assemblePackage(raw, { catalog, catalogDigest, label } = {}) {
-  const normalized = normalizePackage(raw, { catalog, catalogDigest, label });
-  if (!normalized.ok) {
-    return {
-      status: "refused",
-      id: normalized.core.id || null,
-      label: label ?? null,
-      errors: normalized.errors,
-      warnings: normalized.warnings,
-      reasonCodes: uniqueSorted(normalized.errors.map((issue) => issue.code)),
-      missing: normalized.missing,
-      catalog: normalized.catalog,
-      catalogDigest: normalized.catalogDigest,
-      summaryInputs: normalized.summaryInputs,
-    };
-  }
-  const sealed = sealPackage(normalized.core);
-  return {
-    status: "assembled",
-    package: sealed,
-    catalog: normalized.catalog,
-    catalogDigest: normalized.catalogDigest,
-    errors: [],
-    warnings: normalized.warnings,
-    referencedTags: normalized.referencedTags,
-    summaryInputs: normalized.summaryInputs,
-    rounds: normalized.rounds,
   };
 }
 

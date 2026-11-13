@@ -1,5 +1,5 @@
 import { packageDigestMatches } from "./package.js";
-import { lookupDefinition } from "./catalog.js";
+import { lookupDefinition } from "../catalog.js";
 
 /**
  * Validate a full snapshot (already-published packages + an optional landing

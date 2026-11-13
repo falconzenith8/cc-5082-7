@@ -1,0 +1,85 @@
+:root {
+  color-scheme: light dark;
+  font-family: system-ui, "PingFang SC", "Microsoft YaHei", sans-serif;
+}
+body {
+  margin: 0;
+  background: #10141c;
+  color: #e8ecf4;
+}
+header {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px;
+  background: #1a2130;
+  border-bottom: 1px solid #2c3648;
+}
+h1 { font-size: 18px; margin: 0; }
+h2 { font-size: 16px; margin-top: 0; }
+h3 { font-size: 14px; margin-bottom: 8px; }
+.clock { display: flex; gap: 8px; align-items: center; }
+main {
+  display: grid;
+  grid-template-columns: minmax(320px, 1fr) minmax(320px, 1fr);
+  gap: 16px;
+  padding: 16px 24px;
+}
+@media (max-width: 900px) { main { grid-template-columns: 1fr; } }
+.panel {
+  background: #161c29;
+  border: 1px solid #2c3648;
+  border-radius: 8px;
+  padding: 16px;
+}
+.row { display: flex; gap: 8px; margin: 8px 0; flex-wrap: wrap; }
+input, select, button, textarea {
+  background: #0d1117;
+  color: inherit;
+  border: 1px solid #39445a;
+  border-radius: 6px;
+  padding: 6px 10px;
+  font: inherit;
+}
+button { cursor: pointer; background: #233148; }
+button:hover { background: #2d3f5e; }
+textarea {
+  width: 100%;
+  min-height: 160px;
+  font-family: ui-monospace, monospace;
+  font-size: 12px;
+  box-sizing: border-box;
+}
+table { width: 100%; border-collapse: collapse; font-size: 13px; }
+td, th { border-bottom: 1px solid #2c3648; padding: 4px 6px; text-align: left; }
+pre {
+  background: #0d1117;
+  border: 1px solid #2c3648;
+  border-radius: 6px;
+  padding: 8px;
+  max-height: 260px;
+  overflow: auto;
+  font-size: 12px;
+}
+.diagnostics {
+  white-space: pre-wrap;
+  background: #3a1d24;
+  border: 1px solid #7f2d3b;
+  border-radius: 6px;
+  padding: 8px;
+  margin: 8px 0;
+  font-size: 13px;
+}
+.match-card {
+  border: 1px solid #2c3648;
+  border-radius: 8px;
+  padding: 12px;
+  margin-bottom: 12px;
+  background: #131926;
+}
+dl { display: grid; grid-template-columns: auto 1fr; gap: 2px 12px; font-size: 13px; }
+dt { color: #9fb0cc; }
+dd { margin: 0; }
+ul { font-size: 13px; padding-left: 18px; }

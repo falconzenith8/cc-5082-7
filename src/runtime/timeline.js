@@ -1,6 +1,7 @@
-import { activeRoundsAt, stackResolution, scoringMultiplier } from "../src/rules.js";
-import { formatLocal } from "../src/time.js";
-import { shortDigest } from "../src/fingerprint.js";
+import { activeRoundsAt } from "../time/schedule.js";
+import { stackResolution, scoringMultiplier } from "./rules.js";
+import { formatLocal } from "../time/civil.js";
+import { shortDigest } from "../fingerprint.js";
 
 /**
  * Timeline views for parallel matches. These are data structures, not renderers:
@@ -132,5 +133,3 @@ export function describeTimeline(timeline) {
   }
   return lines.join("\n");
 }
-
-

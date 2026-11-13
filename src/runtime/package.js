@@ -1,4 +1,4 @@
-import { fingerprint } from "./fingerprint.js";
+import { fingerprint } from "../fingerprint.js";
 
 /**
  * Rule packages are deterministic compositions of input content. Their identity

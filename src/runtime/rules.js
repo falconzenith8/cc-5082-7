@@ -1,38 +1,10 @@
 /**
  * Pure runtime rule resolution. Both assembly-time validation and live match
  * play call these functions, so what the catalog validates is exactly what the
- * runtime executes. Round instants may be epoch milliseconds (in-memory rounds)
- * or ISO strings (serialized packages); both normalize here.
+ * runtime executes. Time-window questions are answered by the schedule layer
+ * (../time/schedule.js); this module composes the active rounds into concrete
+ * map, ability and scoring rules.
  */
-function toMs(value) {
-  if (value === null || value === undefined) return null;
-  if (typeof value === "number") return value;
-  const parsed = Date.parse(value);
-  return Number.isFinite(parsed) ? parsed : null;
-}
-
-export function roundWindow(round) {
-  const start = toMs(round.startsAtInstant ?? round.startMs);
-  if (start === null) return null;
-  const rawEnd = toMs(round.endsAtInstant ?? round.endMs);
-  const end = rawEnd === null ? Infinity : rawEnd;
-  return { start, end };
-}
-
-export function roundsOverlap(a, b) {
-  const wa = roundWindow(a);
-  const wb = roundWindow(b);
-  if (!wa || !wb) return false;
-  return wa.start < wb.end && wb.start < wa.end;
-}
-
-export function isRoundActiveAt(round, instant) {
-  const window = roundWindow(round);
-  if (!window) return false;
-  return instant >= window.start && instant < window.end;
-}export function activeRoundsAt(core, instant) {
-  return core.schedule.rounds.filter((round) => isRoundActiveAt(round, instant));
-}
 
 export function effectiveMapRules(core, round) {
   const pool = core.mapPool[round.mapPoolId];
@@ -268,4 +240,3 @@ export function scoreMapOutcome(core, activeRounds, { mapId, basePoints }) {
     stacking: scoring.stacking,
   };
 }
-

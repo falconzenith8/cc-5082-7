@@ -1,7 +1,8 @@
-import { SeasonEngine } from "../src/engine.js";
-import { VirtualClock, formatLocal } from "../src/time.js";
-import { describeSelection, compareEntries } from "../src/report.js";
-import { describeTimeline } from "../src/timeline.js";
+import { SeasonEngine } from "../src/runtime/engine.js";
+import { VirtualClock } from "../src/time/clock.js";
+import { formatLocal } from "../src/time/civil.js";
+import { describeSelection, compareEntries } from "../src/runtime/report.js";
+import { describeTimeline } from "../src/runtime/timeline.js";
 import {
   catalog,
   v1,
@@ -16,7 +17,7 @@ import {
 const line = (char = "=", width = 78) => char.repeat(width);
 const tz = "Asia/Shanghai";
 
-const engine = new SeasonEngine({ catalog, clock: new VirtualClock("2026-11-09T00:00:00Z") });
+const engine = new SeasonEngine({ catalog, timeSource: new VirtualClock("2026-11-09T00:00:00Z") });
 
 function show(instant) {
   return formatLocal(instant, tz);
@@ -30,7 +31,7 @@ function publishBlock(title) {
 }
 
 function freshEngine(start = "2026-11-09T00:00:00Z") {
-  return new SeasonEngine({ catalog, clock: new VirtualClock(start) });
+  return new SeasonEngine({ catalog, timeSource: new VirtualClock(start) });
 }
 
 publishBlock("1. 装配与发布：v1（跨日启用 00:00+08:00）");
@@ -95,14 +96,14 @@ console.log(`alpha 创建于 ${show(alpha.createdAt)} -> v${alpha.pin.version} d
 console.log(`  scores=${JSON.stringify(alpha.scores)} events=${alpha.events.map((event) => `${event.mapId}+${event.points}`).join(",")}`);
 
 engine.skipTo("2026-11-13T00:00:00+08:00", { matchIds: ["alpha"] });
-console.log(`时间快进到轮换边界 ${show(engine.clock.now())}`);
+console.log(`时间快进到轮换边界 ${show(engine.timeSource.now())}`);
 
 const p2 = engine.publish(v2);
 if (p2.status !== "published") {
   console.error("v2 refused:", JSON.stringify(p2.errors, null, 2));
   process.exit(1);
 }
-console.log(`v2 发布 at ${show(engine.clock.now())} -> v${p2.version} digest ${p2.digest.slice(0, 15)}…`);
+console.log(`v2 发布 at ${show(engine.timeSource.now())} -> v${p2.version} digest ${p2.digest.slice(0, 15)}…`);
 console.log(`  v2 effectiveFrom=${p2.entry.effectiveFromLocal}`);
 
 engine.skipTo("2026-11-13T09:00:00+08:00", { matchIds: ["alpha"] });
@@ -113,7 +114,7 @@ const beta = engine.getMatch("beta");
 console.log(`beta 创建于 ${show(beta.createdAt)} -> v${beta.pin.version} digest ${beta.pin.digest.slice(0, 15)}…`);
 console.log(`  scores=${JSON.stringify(beta.scores)} events=${beta.events.map((event) => `${event.mapId}+${event.points}`).join(",")}`);
 
-const comparison = engine.compareObservations("alpha", "beta", engine.clock.now());
+const comparison = engine.compareObservations("alpha", "beta", engine.timeSource.now());
 console.log();
 console.log(`观察时刻 ${show(comparison.at)}：alpha(v${comparison.a.packageVersion}) vs beta(v${comparison.b.packageVersion})`);
 for (const difference of comparison.differences) {

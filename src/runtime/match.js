@@ -1,24 +1,16 @@
-import {
-  activeRoundsAt,
-  stackResolution,
-  scoringMultiplier,
-  effectiveMapRules,
-  baseMapRules,
-  effectiveAbilities,
-} from "./rules.js";
+import { scoringMultiplier } from "./rules.js";
+import { RulePackageView } from "./view.js";
 import { PackageError } from "./package.js";
-import { fingerprint, canonicalJson } from "./fingerprint.js";
-import { formatLocal } from "./time.js";
+import { fingerprint, canonicalJson, deepFreeze } from "../fingerprint.js";
+import { formatLocal } from "../time/civil.js";
 
 /**
- * Pin a package to a match by identity digest, resolving it through the store
- * (live versioning) or through a history index (rollback/archive). The pin is
- * verified to still be the exact content that was frozen when the match was
- * created; a failed verification means the rules were mutated and the match
- * cannot safely continue.
+ * Pin a package to a match by identity digest. The pin carries the exact
+ * frozen content (package + catalog) the match will execute against; it is
+ * itself frozen, so nothing the match does can rewrite its own rules.
  */
 export function pinPackage(entry) {
-  return {
+  return deepFreeze({
     version: entry.version,
     digest: entry.digest,
     packageId: entry.pkg.id,
@@ -30,7 +22,7 @@ export function pinPackage(entry) {
     catalogDigest: entry.catalogDigest,
     effectiveFrom: entry.effectiveFrom,
     pinFingerprint: fingerprint(canonicalJson(entry.pkg)),
-  };
+  });
 }
 
 export function verifyPin(pin) {
@@ -48,23 +40,28 @@ export function verifyPin(pin) {
 }
 
 /**
- * Match state is authoritative for scoring: points are added to the match's own
- * ledger as reported, and the rule package only ever explains future scoring.
- * A version released mid-match therefore cannot retroactively alter results.
+ * In-match adjudication. The match state is authoritative for scoring: points
+ * are added to the match's own ledger as reported, and the rule package only
+ * ever explains future scoring. A version released mid-match therefore cannot
+ * retroactively alter results. All rule questions go through the read-only
+ * RulePackageView built from the pin.
  */
 export class Match {
-  constructor({ matchId, pin, createdAt, now, basePoints, roundId = null, roundRules = null, events = [], mapRules = null }) {
+  constructor({ matchId, pin, view = null, createdAt, now, basePoints, roundId = null, roundRules = null, events = [], mapRules = null }) {
     const verified = verifyPin(pin);
     if (!verified.ok) throw new PackageError(verified.code, verified.message, verified);
     this.matchId = matchId;
     this.pin = pin;
+    this.view = view ?? new RulePackageView({ pkg: pin.core, catalog: pin.catalog, version: pin.version, digest: pin.digest });
     this.createdAt = createdAt;
     this.createdAtLocal = formatLocal(createdAt, pin.timeZone);
     this.pinnedTo = pin.digest;
-    this.mapRules = mapRules;
+    this.mapRules = mapRules ? deepFreeze({ ...mapRules }) : null;
     this.basePoints = basePoints;
     this.roundId = roundId;
-    this.roundRules = roundRules;
+    this.roundRules = roundRules
+      ? deepFreeze({ rounds: [...roundRules.rounds], resolution: roundRules.resolution })
+      : null;
     this.scores = { a: 0, b: 0 };
     this.events = [];
     this.status = "live";
@@ -77,18 +74,17 @@ export class Match {
    */
   effectiveRound() {
     if (this.roundRules) return this.roundRules;
-    const rounds = activeRoundsAt(this.pin.core, this.createdAt);
-    if (rounds.length === 0) return { rounds, resolution: stackResolution(this.pin.core, rounds) };
-    return { rounds, resolution: stackResolution(this.pin.core, rounds) };
+    const resolved = this.view.resolutionAt(this.createdAt);
+    return { rounds: resolved.rounds ?? [], resolution: resolved.resolution };
   }
 
   rulesView() {
     const round = this.effectiveRound();
     const winner = round?.resolution?.winners?.[0] ?? null;
-    const mapRules = this.mapRules ?? (winner ? effectiveMapRules(this.pin.core, winner) : baseMapRules(this.pin.core));
-    const abilities = effectiveAbilities(this.pin.core, this.pin.catalog, winner ?? null);
+    const mapRules = this.mapRules ?? (winner ? this.view.mapRulesFor(winner) : this.view.baseMapRules());
+    const abilities = this.view.abilitiesFor(winner ?? null);
     const multiplier = round
-      ? scoringMultiplier(this.pin.core, round.resolution.compatible ? round.resolution.winners : round.rounds)
+      ? this.view.multiplierFor(round.resolution.compatible ? round.resolution.winners : round.rounds)
       : { multiplier: 1, stacking: { compatible: true, reason: null }, contributors: [], effect: "base" };
     return {
       roundId: winner?.id ?? null,
@@ -144,7 +140,7 @@ export class Match {
     }
     const scoring = scoringMultiplier(
       this.pin.core,
-      view.roundId ? view.stacking?.winners ?? activeRoundsAt(this.pin.core, this.createdAt) : [],
+      view.roundId ? (view.stacking?.winners ?? this.view.activeRoundsAt(this.createdAt)) : [],
     );
     if (!scoring.stacking.compatible) {
       throw new PackageError("MATCH_STACK_BLOCKED", `pinned rules block the overlap of ${view.activeRounds.join(", ")}`, {
@@ -181,4 +177,3 @@ export class Match {
     return this.status;
   }
 }
-

@@ -1,10 +1,11 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 
-import { SeasonEngine } from "../src/engine.js";
-import { VirtualClock, resolveLocal, formatLocal, parseInstant } from "../src/time.js";
-import { describeSelection, compareEntries } from "../src/report.js";
-import { packageDigestMatches } from "../src/package.js";
+import { SeasonEngine } from "../src/runtime/engine.js";
+import { VirtualClock } from "../src/time/clock.js";
+import { resolveLocal, formatLocal, parseInstant } from "../src/time/civil.js";
+import { describeSelection, compareEntries } from "../src/runtime/report.js";
+import { packageDigestMatches } from "../src/runtime/package.js";
 import {
   catalog,
   v1,
@@ -17,7 +18,7 @@ import {
 } from "../scenarios/scenario.js";
 
 function engineAt(start = "2026-11-09T00:00:00Z") {
-  return new SeasonEngine({ catalog, clock: new VirtualClock(start) });
+  return new SeasonEngine({ catalog, timeSource: new VirtualClock(start) });
 }
 
 function publishAt(engine, when, candidate, opts = {}) {
@@ -128,11 +129,11 @@ test("priority order decides which overlapping activity supplies the multiplier"
   const result = publishAt(engine, "2026-11-10T00:00:00Z", resolvedOverlapPackage);
   assert.equal(result.status, "published");
   engine.skipTo("2026-11-12T06:00:00+08:00", { matchIds: [] });
-  const inspection = engine.inspectRulesAt(engine.clock.now());
+  const inspection = engine.inspectRulesAt(engine.timeSource.now());
   assert.equal(inspection.status, "ok");
   assert.equal(inspection.winningRound, "sprint");
   assert.equal(inspection.scoringMultiplier, 1.5);
-  engine.startMatch({ matchId: "priority-match", at: engine.clock.now() });
+  engine.startMatch({ matchId: "priority-match", at: engine.timeSource.now() });
   const event = engine.reportResult("priority-match", { kind: "map-result", side: "a", mapId: "neon-docks" });
   assert.equal(event.points, 15);
 });
@@ -142,11 +143,11 @@ test("excluded overlapping activities block the match rather than stacking", () 
   const result = publishAt(engine, "2026-11-10T00:00:00Z", excludedOverlapPackage);
   assert.equal(result.status, "published");
   engine.skipTo("2026-11-12T06:00:00+08:00", { matchIds: [] });
-  const inspection = engine.inspectRulesAt(engine.clock.now());
+  const inspection = engine.inspectRulesAt(engine.timeSource.now());
   assert.equal(inspection.status, "blocked");
   assert.equal(inspection.reason, "STACK_BLOCKED");
   assert.throws(
-    () => engine.startMatch({ matchId: "blocked", at: engine.clock.now() }),
+    () => engine.startMatch({ matchId: "blocked", at: engine.timeSource.now() }),
     (error) => error.code === "MATCH_STACK_BLOCKED",
   );
   assert.equal(engine.getMatch("blocked"), null);
@@ -366,7 +367,7 @@ test("inspection reports sub-1 multipliers without clamping to 1", () => {
   const engine = engineAt();
   publishAt(engine, "2026-11-10T00:00:00Z", v1);
   engine.skipTo("2026-11-13T09:00:00+08:00", { matchIds: [] });
-  const inspection = engine.inspectRulesAt(engine.clock.now());
+  const inspection = engine.inspectRulesAt(engine.timeSource.now());
   assert.equal(inspection.status, "ok");
   assert.equal(inspection.roundId, "climber");
   assert.equal(inspection.scoringMultiplier, 0.5);

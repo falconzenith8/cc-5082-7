@@ -1,10 +1,11 @@
 import { readFileSync } from "node:fs";
 import { resolve, basename } from "node:path";
 
-import { SeasonEngine, inspectAssembledPackage } from "../src/engine.js";
-import { VirtualClock } from "../src/time.js";
+import { SeasonEngine } from "../src/runtime/engine.js";
+import { inspectAssembledPackage } from "../src/runtime/inspect.js";
+import { VirtualClock } from "../src/time/clock.js";
 import { normalizeCatalog } from "../src/catalog.js";
-import { assemblePackage } from "../src/normalize.js";
+import { assemblePackage } from "../src/compose/assemble.js";
 
 const USAGE = `season-rules — 赛季规则装配器 CLI
 
@@ -114,14 +115,14 @@ function commandPublish(args) {
     .sort((a, b) => a - b)[0];
   const engine = new SeasonEngine({
     catalog,
-    clock: new VirtualClock((earliest ?? Date.now()) - 60_000),
+    timeSource: new VirtualClock((earliest ?? Date.now()) - 60_000),
   });
 
   const outcomes = [];
   for (const candidate of candidates) {
     const publishedAt = Date.parse(candidate.raw.publishedAt ?? "");
-    if (Number.isFinite(publishedAt) && publishedAt > engine.clock.now()) {
-      engine.clock.set(publishedAt);
+    if (Number.isFinite(publishedAt) && publishedAt > engine.timeSource.now()) {
+      engine.timeSource.set(publishedAt);
     }
     const result = engine.publish(candidate.raw);
     outcomes.push({

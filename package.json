@@ -6,7 +6,10 @@
   "description": "Versioned, time-zone aware season rule package assembler and runtime",
   "scripts": {
     "test": "node --test test/*.test.js",
-    "demo": "node demo.js"
+    "demo": "node scripts/scenario-run.js",
+    "trace": "node scripts/runtime-trace.js",
+    "compare": "node scripts/compare-runtime.js",
+    "ui": "node ui/server.js"
   },
   "engines": {
     "node": ">=20"

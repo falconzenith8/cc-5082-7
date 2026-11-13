@@ -1,42 +1,44 @@
 import { RulePackageStore, explainSelection } from "./store.js";
-import { Match, verifyPin } from "./match.js";
-import { VirtualClock, parseWhen, formatLocal } from "./time.js";
+import { Match, pinPackage, verifyPin } from "./match.js";
+import { RulePackageView } from "./view.js";
+import { requireTimeSource } from "../time/clock.js";
+import { parseWhen, formatLocal } from "../time/civil.js";
 import { PackageError } from "./package.js";
-import {
-  effectiveAbilities,
-  effectiveMapRules,
-  baseMapRules,
-  stackResolution,
-  activeRoundsAt,
-  scoringMultiplier,
-} from "./rules.js";
-import { fingerprint, canonicalJson, shortDigest } from "./fingerprint.js";
+import { canonicalJson, shortDigest, deepFreeze } from "../fingerprint.js";
 import { buildTimeline } from "./timeline.js";
 
 /**
  * Engine facade: publication, selection by creation time, parallel matches,
  * rollback, and time skipping. No wall-clock reads; every decision takes an
- * explicit instant supplied by the clock or caller.
+ * explicit instant supplied by the injected time source or the caller.
+ *
+ * Two kinds of methods:
+ *   commands (publish, startMatch, reportResult, skipTo, rollback) mutate
+ *     engine/match/clock state;
+ *   queries (selectAt, inspectRulesAt, observations, compareObservations,
+ *     stateAt, timeline) are read-only: they return frozen snapshots and never
+ *     hand out a mutable reference to the rule objects live matches execute
+ *     against.
  */
 export class SeasonEngine {
-  constructor({ store, clock = new VirtualClock(), catalog = null } = {}) {
+  constructor({ store, timeSource, catalog = null } = {}) {
+    this.timeSource = requireTimeSource(timeSource);
     this.store = store ?? new RulePackageStore({ catalog });
-    this.clock = clock;
     this.matches = new Map();
     this.refusals = [];
     this.history = [];
   }
 
   publish(candidate, opts = {}) {
-    const result = this.store.publish(candidate, { now: this.clock.now(), ...opts });
+    const result = this.store.publish(candidate, { now: this.timeSource.now(), ...opts });
     if (result.status === "refused") {
-      this.refusals.push(Object.freeze({ at: this.clock.now(), stage: result.stage, result }));
+      this.refusals.push(Object.freeze({ at: this.timeSource.now(), stage: result.stage, result }));
       return result;
     }
     if (result.status === "duplicate") return result;
     this.history.push({
       kind: "publish",
-      at: this.clock.now(),
+      at: this.timeSource.now(),
       version: result.version,
       digest: result.digest,
     });
@@ -47,27 +49,30 @@ export class SeasonEngine {
    * Select the package at the match's creation instant. This is the only package
    * the match will ever use: `selectAt` is evaluated once, and the result is a
    * frozen pin, so later publications cannot reach in.
+   *
+   * Read-only: the returned snapshot is frozen; the store entries it references
+   * are frozen at publication time.
    */
   selectAt(when) {
     const parsed = parseWhen(when);
     const instant = parsed.status === "ok" ? parsed.instant : null;
     if (instant === null) {
-      return {
+      return deepFreeze({
         status: "none",
         reason: "INVALID_INSTANT",
         detail: parsed,
-      };
+      });
     }
     const available = this.store.availableAt(instant);
     if (available.length === 0) {
-      return {
+      return deepFreeze({
         status: "none",
         reason: "NO_PACKAGE_BEFORE_INSTANT",
         instant,
         instantLocal: this.store.head() ? formatLocal(instant, this.store.head().pkg.timeZone) : null,
         earliest: this.store.head()?.effectiveFrom ?? null,
         versions: this.store.versions(),
-      };
+      });
     }
     const newest = available[0];
     let previous = null;
@@ -77,7 +82,7 @@ export class SeasonEngine {
         break;
       }
     }
-    return {
+    return deepFreeze({
       status: "selected",
       instant,
       entry: newest,
@@ -86,7 +91,7 @@ export class SeasonEngine {
       previousVersion: previous?.version ?? null,
       rolledForwardFrom: previous?.version ?? null,
       pinnedEntry: newest,
-    };
+    });
   }
 
   startMatch({ matchId, at, roundId = null, basePoints = null, events = [] }) {
@@ -104,36 +109,37 @@ export class SeasonEngine {
     if (selection.status !== "selected") {
       throw new PackageError("MATCH_NO_RULES", `no rule package is effective at match creation`, selection);
     }
-    const pin = packagePin(selection.entry);
+    const pin = pinPackage(selection.entry);
     const truth = verifyPin(pin);
     if (!truth.ok) throw new PackageError(truth.code, truth.message, truth);
 
-    const core = pin.core;
-    const rounds = activeRoundsAt(core, when.instant);
-    let roundRules = { rounds, resolution: stackResolution(core, rounds) };
-    if (roundId !== null) {
-      const named = rounds.find((round) => round.id === roundId);
-      if (!named) {
-        throw new PackageError("MATCH_ROUND_UNAVAILABLE", `round ${roundId} is not active at ${at}`, {
-          activeRounds: rounds.map((round) => round.id),
-        });
-      }
-      roundRules = { rounds: [named], resolution: stackResolution(core, [named]) };
-    }
-    if (!roundRules.resolution.compatible) {
-      throw new PackageError("MATCH_STACK_BLOCKED", `rounds cannot be combined under the pinned package`, {
-        reason: roundRules.resolution.reason,
+    const view = new RulePackageView({
+      pkg: pin.core,
+      catalog: pin.catalog,
+      version: pin.version,
+      digest: pin.digest,
+      displayName: pin.title,
+    });
+    const resolved = view.resolutionAt(when.instant, { roundId });
+    if (resolved.status === "none") {
+      throw new PackageError("MATCH_ROUND_UNAVAILABLE", `round ${roundId} is not active at ${at}`, {
+        activeRounds: resolved.activeRounds,
       });
     }
-    const winner = roundRules.resolution.winners[0] ?? null;
-    const mapRules = winner ? effectiveMapRules(core, winner) : null;
+    if (resolved.status === "blocked") {
+      throw new PackageError("MATCH_STACK_BLOCKED", `rounds cannot be combined under the pinned package`, {
+        reason: resolved.resolution.reason,
+      });
+    }
+    const winner = resolved.winner;
+    const mapRules = winner ? view.mapRulesFor(winner) : null;
     if (winner && !mapRules.valid) {
       throw new PackageError("MATCH_MAP_RULES_INVALID", `round ${winner.id} has no playable maps after restrictions`, {
         reason: mapRules.reason,
       });
     }
     if (!winner) {
-      const base = core.defaults?.mapPoolId ? effectiveMapRules(core, { mapPoolId: core.defaults.mapPoolId, effects: [] }) : null;
+      const base = view.defaultPoolRules();
       if (base && !base.valid) {
         throw new PackageError("MATCH_NO_ACTIVE_RULES", `no round is active at ${at} and the package has no usable default pool`, {
           baseMapRules: base,
@@ -144,17 +150,18 @@ export class SeasonEngine {
     const match = new Match({
       matchId,
       pin,
+      view,
       createdAt: when.instant,
       now: when.instant,
       basePoints,
-      roundRules,
+      roundRules: { rounds: resolved.rounds, resolution: resolved.resolution },
       mapRules,
       events,
     });
     this.matches.set(matchId, match);
     this.history.push({
       kind: "start",
-      at: this.clock.now(),
+      at: this.timeSource.now(),
       matchId,
       version: pin.version,
       digest: pin.digest,
@@ -165,7 +172,7 @@ export class SeasonEngine {
 
   reportResult(matchId, event) {
     const match = this.requireMatch(matchId);
-    const record = match.record(event, { now: this.clock.now() });
+    const record = match.record(event, { now: this.timeSource.now() });
     return record;
   }
 
@@ -179,40 +186,42 @@ export class SeasonEngine {
     return match;
   }
 
-  /** Two (or more) parallel matches observed at the current clock instant. */
-  observations(matchIds, at = this.clock.now()) {
-    return matchIds.map((matchId) => {
-      const match = this.requireMatch(matchId);
-      const view = match.rulesView();
-      return {
-        matchId,
-        observedAt: at,
-        observedAtLocal: formatLocal(at, match.pin.timeZone),
-        packageVersion: match.pin.version,
-        packageDigest: match.pin.digest,
-        packageDigestShort: shortDigest(match.pin.digest),
-        pinnedTo: match.pinnedTo,
-        frozenAt: match.createdAt,
-        frozenAtLocal: match.createdAtLocal,
-        stillUsesPinnedPackage:
-          canonicalJson(match.pin.core) === canonicalJson(this.store.get(match.pin.version)?.pkg ?? {}),
-        currentPackageVersion: this.store.head()?.version ?? null,
-        roundId: view.roundId,
-        activeRounds: view.activeRounds,
-        scoringMultiplier: view.multiplier,
-        allowedMaps: view.allowedMaps,
-        allowedAbilities: view.allowedAbilities,
-        scores: { ...match.scores },
-        events: match.events.map((event) => ({ ...event })),
-      };
-    });
+  /** Two (or more) parallel matches observed at the given (or current) instant. Read-only. */
+  observations(matchIds, at = this.timeSource.now()) {
+    return deepFreeze(
+      matchIds.map((matchId) => {
+        const match = this.requireMatch(matchId);
+        const view = match.rulesView();
+        return {
+          matchId,
+          observedAt: at,
+          observedAtLocal: formatLocal(at, match.pin.timeZone),
+          packageVersion: match.pin.version,
+          packageDigest: match.pin.digest,
+          packageDigestShort: shortDigest(match.pin.digest),
+          pinnedTo: match.pinnedTo,
+          frozenAt: match.createdAt,
+          frozenAtLocal: match.createdAtLocal,
+          stillUsesPinnedPackage:
+            canonicalJson(match.pin.core) === canonicalJson(this.store.get(match.pin.version)?.pkg ?? {}),
+          currentPackageVersion: this.store.head()?.version ?? null,
+          roundId: view.roundId,
+          activeRounds: view.activeRounds,
+          scoringMultiplier: view.multiplier,
+          allowedMaps: view.allowedMaps,
+          allowedAbilities: view.allowedAbilities,
+          scores: { ...match.scores },
+          events: match.events.map((event) => ({ ...event })),
+        };
+      }),
+    );
   }
 
   /**
    * Compare two parallel matches field by field so the divergence after a
-   * rotation boundary is visible as concrete values, not prose.
+   * rotation boundary is visible as concrete values, not prose. Read-only.
    */
-  compareObservations(matchAId, matchBId, at = this.clock.now()) {
+  compareObservations(matchAId, matchBId, at = this.timeSource.now()) {
     const [a, b] = this.observations([matchAId, matchBId], at);
     const fields = [
       "packageVersion",
@@ -231,68 +240,72 @@ export class SeasonEngine {
         differences.push({ field, a: a[field], b: b[field] });
       }
     }
-    return {
+    return deepFreeze({
       at,
       a,
       b,
       samePackage: a.packageDigest === b.packageDigest,
       sameRules: differences.length === 0,
       differences,
-    };
+    });
   }
 
-  /** Time-skip tool. Returns before/after observations for the affected matches. */
+  /**
+   * Time-skip tool. Drives the injected time source forward; refuses when the
+   * source is immutable. Returns before/after observations for the matches.
+   */
   skipTo(when, { matchIds = [...this.matches.keys()], timeZone } = {}) {
-    const before = this.clock.now();
-    const after = this.clock.advanceTo(when, timeZone);
+    if (typeof this.timeSource.advanceTo !== "function") {
+      throw new PackageError(
+        "TIME_SOURCE_IMMUTABLE",
+        "the injected time source cannot be driven by skipTo; advance it yourself",
+      );
+    }
+    const before = this.timeSource.now();
+    const after = this.timeSource.advanceTo(when, timeZone);
     const observations = this.observations(matchIds, after.to);
     return { before: before, after: after.to, elapsedMs: after.elapsedMs, observations };
   }
 
-  /** Read the rules a match started at `at` would receive without creating it. */
+  /** Read the rules a match started at `at` would receive without creating it. Read-only. */
   inspectRulesAt(when, { roundId = null } = {}) {
     const selection = this.selectAt(when);
     if (selection.status !== "selected") return selection;
     const instant = selection.instant;
-    const core = selection.entry.pkg;
-    const rounds = activeRoundsAt(core, instant);
-    let resolution = stackResolution(core, rounds);
-    if (roundId !== null) {
-      const named = rounds.find((round) => round.id === roundId);
-      if (!named) {
-        return { status: "none", reason: "ROUND_UNAVAILABLE", activeRounds: rounds.map((round) => round.id) };
-      }
-      resolution = stackResolution(core, [named]);
+    const view = new RulePackageView({
+      pkg: selection.entry.pkg,
+      catalog: selection.entry.catalog,
+      version: selection.version,
+      digest: selection.digest,
+    });
+    const snapshot = view.rulesAt(instant, { roundId });
+    if (snapshot.status === "none") {
+      return deepFreeze({ status: "none", reason: snapshot.reason, activeRounds: snapshot.activeRounds });
     }
-    if (!resolution.compatible) {
-      return {
+    if (snapshot.status === "blocked") {
+      return deepFreeze({
         status: "blocked",
         reason: "STACK_BLOCKED",
-        roundIds: rounds.map((round) => round.id),
-        stacking: resolution,
+        roundIds: snapshot.roundIds,
+        stacking: snapshot.stacking,
         version: selection.version,
-      };
+      });
     }
-    const winner = resolution.winners[0] ?? null;
-    const mapRules = winner ? effectiveMapRules(core, winner) : { valid: true, allowedMaps: [], defaultMap: null };
-    const multiplier = resolution.compatible
-      ? stackResolution(core, resolution.winners)
-      : resolution;
-    return {
+    return deepFreeze({
       status: "ok",
       version: selection.version,
       digest: selection.digest,
       instant,
-      instantLocal: formatLocal(instant, core.timeZone),
-      roundId: winner?.id ?? null,
-      activeRounds: rounds.map((round) => round.id),
-      winningRound: winner?.id ?? null,
-      mapRules,
-      allowedAbilities: effectiveAbilities(core, selection.entry.catalog, winner ?? null),
-      scoringMultiplier: scoringMultiplier(core, winner ? [winner] : []).multiplier,
-      winnerCondition: winner?.winnerCondition ?? null,
-      stacking: resolution,
-    };
+      instantLocal: formatLocal(instant, view.timeZone),
+      roundId: snapshot.roundId,
+      activeRounds: snapshot.activeRounds,
+      winningRound: snapshot.winningRound,
+      mapRules: snapshot.mapRules,
+      allowedAbilities: snapshot.allowedAbilities,
+      scoringMultiplier: snapshot.scoringMultiplier,
+      winnerCondition: snapshot.winnerCondition,
+      stacking: snapshot.stacking,
+    });
   }
 
   /** Roll back by re-publishing an earlier package. The published history is
@@ -342,7 +355,7 @@ export class SeasonEngine {
     }
     const publication = resolvedPublishedAt
       ? new Date(resolvedPublishedAt.instant).toISOString()
-      : new Date(this.clock.now()).toISOString();
+      : new Date(this.timeSource.now()).toISOString();
     const source = target.materializedInputs;
     if (!source) {
       throw new PackageError("ROLLBACK_SOURCE_UNAVAILABLE", `v${toVersion} has no stored source inputs to replay`);
@@ -366,7 +379,7 @@ export class SeasonEngine {
     if (result.status === "published" || result.status === "duplicate") {
       this.history.push({
         kind: "rollback",
-        at: this.clock.now(),
+        at: this.timeSource.now(),
         toVersion,
         newVersion: result.version ?? null,
         digest: result.digest ?? null,
@@ -412,9 +425,9 @@ export class SeasonEngine {
     return explainSelection(this.store.get(fromVersion), this.store.get(toVersion));
   }
 
-  stateAt(instant = this.clock.now()) {
+  stateAt(instant = this.timeSource.now()) {
     const selection = this.selectAt(instant);
-    return {
+    return deepFreeze({
       at: instant,
       atLocal: this.store.head() ? formatLocal(instant, this.store.head().pkg.timeZone) : null,
       currentVersion: this.store.head()?.version ?? null,
@@ -427,85 +440,11 @@ export class SeasonEngine {
         round: match.effectiveRound()?.resolution?.winners?.[0]?.id ?? null,
         scores: { ...match.scores },
       })),
-    };
+    });
   }
 
   /** Data-only parallel-match timeline; the caller decides how to render it. */
   timeline(matchIds, window) {
     return buildTimeline(this, matchIds, window);
   }
-}
-
-/**
- * Resolve rules for an already-assembled package at an instant, without any
- * store or match. Used by the CLI `inspect` command and by offline tooling.
- */
-export function inspectAssembledPackage(assembled, when, { roundId = null } = {}) {
-  const parsed = parseWhen(when, assembled.package.timeZone);
-  if (parsed.status !== "ok") {
-    return { status: "none", reason: "INVALID_INSTANT", detail: parsed };
-  }
-  const core = assembled.package;
-  let rounds = activeRoundsAt(core, parsed.instant);
-  let resolution = stackResolution(core, rounds);
-  if (roundId !== null) {
-    const named = rounds.find((round) => round.id === roundId);
-    if (!named) {
-      return { status: "none", reason: "ROUND_UNAVAILABLE", activeRounds: rounds.map((round) => round.id) };
-    }
-    rounds = [named];
-    resolution = stackResolution(core, rounds);
-  }
-  if (!resolution.compatible) {
-    return {
-      status: "blocked",
-      reason: "STACK_BLOCKED",
-      roundIds: rounds.map((round) => round.id),
-      stacking: resolution,
-      version: null,
-      digest: core.identity.digest,
-    };
-  }
-  const winner = resolution.winners[0] ?? null;
-  const mapRules = winner ? effectiveMapRules(core, winner) : baseMapRules(core);
-  if (!mapRules.valid) {
-    return {
-      status: "blocked",
-      reason: winner ? "NO_PLAYABLE_MAP" : "NO_FALLBACK_POOL",
-      roundIds: rounds.map((round) => round.id),
-      mapRules,
-      digest: core.identity.digest,
-    };
-  }
-  return {
-    status: "ok",
-    version: null,
-    digest: core.identity.digest,
-    instant: parsed.instant,
-    instantLocal: formatLocal(parsed.instant, core.timeZone),
-    roundId: winner?.id ?? null,
-    winningRound: winner?.id ?? null,
-    activeRounds: rounds.map((round) => round.id),
-    mapRules,
-    allowedAbilities: effectiveAbilities(core, assembled.catalog, winner),
-    scoringMultiplier: scoringMultiplier(core, winner ? [winner] : []).multiplier,
-    winnerCondition: winner?.winnerCondition ?? null,
-    stacking: resolution,
-  };
-}
-
-function packagePin(entry) {
-  return {
-    version: entry.version,
-    digest: entry.digest,
-    packageId: entry.pkg.id,
-    timeZone: entry.pkg.timeZone,
-    title: entry.displayName,
-    summary: entry.summary ?? null,
-    core: entry.pkg,
-    catalog: entry.catalog,
-    catalogDigest: entry.catalogDigest,
-    effectiveFrom: entry.effectiveFrom,
-    pinFingerprint: fingerprint(canonicalJson(entry.pkg)),
-  };
 }

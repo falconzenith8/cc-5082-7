@@ -1,8 +1,9 @@
-import { assemblePackage, normalizePackage, diffInputs } from "./normalize.js";
+import { assemblePackage } from "../compose/assemble.js";
+import { diffInputs } from "../compose/normalize.js";
+import { ruleSummary } from "../compose/summary.js";
 import { validateSnapshot } from "./validate.js";
-import { fingerprint, canonicalJson, deepFreeze, shortDigest } from "./fingerprint.js";
-import { parseWhen, formatLocal } from "./time.js";
-import { PackageError, packageDigestMatches } from "./package.js";
+import { fingerprint, canonicalJson, deepFreeze } from "../fingerprint.js";
+import { parseWhen, formatLocal } from "../time/civil.js";
 
 export class StoreError extends Error {
   constructor(code, message, details = {}) {
@@ -14,10 +15,12 @@ export class StoreError extends Error {
 }
 
 /**
- * In-memory rule package store. Packages are immutable once published.
- * Publication is guarded by optimistic concurrency (expectCurrentDigest), strict
- * version increments, content-dedup, content-anchored identity, and a scan that
- * every already-started match stays bound to its original package.
+ * In-memory rule package store. Packages are immutable once published — every
+ * entry is deep-frozen on arrival, so a reader (activity query, timeline,
+ * report) can never mutate the rule objects a live match is executing against.
+ * Publication is guarded by optimistic concurrency (expectCurrentDigest),
+ * strict version increments, content-dedup, content-anchored identity, and a
+ * scan that every already-started match stays bound to its original package.
  */
 export class RulePackageStore {
   #entries = [];
@@ -204,7 +207,7 @@ export class RulePackageStore {
       });
     }
 
-    const summary = buildSummary({
+    const summary = ruleSummary({
       pkg,
       catalog: baseline.catalog,
       catalogDigest: baseline.catalogDigest,
@@ -213,17 +216,17 @@ export class RulePackageStore {
       notes: rawPackage.notes ?? null,
     });
 
-    const entry = {
+    const entry = deepFreeze({
       version: nextVersion,
       digest: pkg.identity.digest,
       displayName: summary.displayName,
       summary,
       effectiveFrom: new Date(effectiveFromResolved.instant).toISOString(),
       effectiveFromLocal: formatLocal(effectiveFromResolved.instant, pkg.timeZone),
-      pkg: deepFreeze(pkg),
-      catalog: deepFreeze(baseline.catalog),
+      pkg,
+      catalog: baseline.catalog,
       catalogDigest: baseline.catalogDigest,
-      materializedInputs: deepFreeze({
+      materializedInputs: {
         id: rawPackage.id,
         publishedAt: pkg.publishedAt,
         timeZone: pkg.timeZone,
@@ -236,10 +239,10 @@ export class RulePackageStore {
         displayName: rawPackage.displayName ?? null,
         notes: rawPackage.notes ?? null,
         options: rawPackage.options ?? {},
-      }),
+      },
       diagnostics: { warnings: assembled.warnings, summaryInputs: assembled.summaryInputs },
-      options: deepFreeze(rawPackage.options ?? {}),
-    };
+      options: rawPackage.options ?? {},
+    });
     this.#entries.push(entry);
 
     return {
@@ -263,51 +266,6 @@ export class RulePackageStore {
   }
 }
 
-function buildSummary({ pkg, catalog, catalogDigest, summaryInputs, displayName, notes }) {
-  const mapIds = [...new Set(Object.values(pkg.mapPool).flatMap((pool) => pool.maps))].sort();
-  const abilityIds = [...new Set([...pkg.abilities.allow, ...pkg.abilities.deny])];
-  const definedAbilityIds = Object.keys(catalog.abilities).sort();
-  const tags = [...new Set([
-    ...mapIds.flatMap((id) => catalog.maps[id]?.tags ?? []),
-    ...definedAbilityIds.flatMap((id) => catalog.abilities[id]?.tags ?? []),
-  ])].sort();
-  const name =
-    typeof displayName === "string" && displayName.trim()
-      ? displayName.trim()
-      : typeof pkg.notes === "string" && pkg.notes.trim()
-        ? pkg.notes.trim()
-        : `${pkg.id}@${pkg.publishedAt}`;
-  return {
-    displayName: name,
-    notes: notes ?? null,
-    digest: pkg.identity.digest,
-    digestShort: shortDigest(pkg.identity.digest),
-    catalogDigest,
-    catalogDigestShort: shortDigest(catalogDigest),
-    packageId: pkg.id,
-    timeZone: pkg.timeZone,
-    publishedAt: pkg.publishedAt,
-    inputs: pkg.options,
-    summaryInputs: summaryInputs ?? null,
-    content: {
-      maps: mapIds,
-      abilities: definedAbilityIds,
-      tags,
-      mapPools: Object.keys(pkg.mapPool).sort(),
-      rounds: pkg.schedule.rounds.map((round) => ({
-        id: round.id,
-        startsAt: round.startsAt,
-        endsAt: round.endsAt,
-        startsAtInstant: round.startsAtInstant,
-        endsAtInstant: round.endsAtInstant,
-        mapPoolId: round.mapPoolId,
-        winnerCondition: round.winnerCondition,
-        effects: round.effects,
-      })),
-    },
-  };
-}
-
 /** Explain a version selection, including whether anything other than the name changed. */
 export function explainSelection(entryA, entryB) {
   if (!entryA || !entryB) return null;
@@ -320,5 +278,3 @@ export function explainSelection(entryA, entryB) {
     inputDiff: changes,
   };
 }
-
-export { normalizePackage, packageDigestMatches, PackageError };

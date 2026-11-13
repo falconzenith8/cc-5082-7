@@ -1,5 +1,5 @@
 import { fingerprint } from "./fingerprint.js";
-import { isValidTimeZone } from "./time.js";
+import { isValidTimeZone } from "./time/civil.js";
 
 /**
  * Content catalog: immutable definitions (maps, abilities) keyed by contentId.
