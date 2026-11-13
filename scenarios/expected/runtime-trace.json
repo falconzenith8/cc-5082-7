@@ -1,0 +1,3342 @@
+{
+  "comparison": {
+    "a": {
+      "activeRounds": [
+        "sprint"
+      ],
+      "allowedAbilities": [
+        "blink",
+        "drone",
+        "shield"
+      ],
+      "allowedMaps": [
+        "highland-pass",
+        "neon-docks"
+      ],
+      "currentPackageVersion": 2,
+      "events": [
+        {
+          "abilityId": null,
+          "at": 1794484800000,
+          "atLocal": "2026-11-12T20:00:00+08:00",
+          "basePoints": 10,
+          "contributingRounds": [
+            "sprint"
+          ],
+          "kind": "map-result",
+          "mapId": "neon-docks",
+          "multiplier": 1.5,
+          "multiplierSource": "exclusive",
+          "packageDigest": "sha256:2c094f8d5dbbf8b0e3eab88b95a983f3b81be83fcaecda7fa66842ecef8936c2",
+          "packageVersion": 1,
+          "perMapBonus": 0,
+          "points": 15,
+          "seq": 1,
+          "side": "a"
+        },
+        {
+          "abilityId": null,
+          "at": 1794484800000,
+          "atLocal": "2026-11-12T20:00:00+08:00",
+          "basePoints": 10,
+          "contributingRounds": [
+            "sprint"
+          ],
+          "kind": "map-result",
+          "mapId": "highland-pass",
+          "multiplier": 1.5,
+          "multiplierSource": "exclusive",
+          "packageDigest": "sha256:2c094f8d5dbbf8b0e3eab88b95a983f3b81be83fcaecda7fa66842ecef8936c2",
+          "packageVersion": 1,
+          "perMapBonus": 0,
+          "points": 15,
+          "seq": 2,
+          "side": "b"
+        }
+      ],
+      "frozenAt": 1794484800000,
+      "frozenAtLocal": "2026-11-12T20:00:00+08:00",
+      "matchId": "alpha",
+      "observedAt": 1794531600000,
+      "observedAtLocal": "2026-11-13T09:00:00+08:00",
+      "packageDigest": "sha256:2c094f8d5dbbf8b0e3eab88b95a983f3b81be83fcaecda7fa66842ecef8936c2",
+      "packageDigestShort": "2c094f8d",
+      "packageVersion": 1,
+      "pinnedTo": "sha256:2c094f8d5dbbf8b0e3eab88b95a983f3b81be83fcaecda7fa66842ecef8936c2",
+      "roundId": "sprint",
+      "scores": {
+        "a": 15,
+        "b": 15
+      },
+      "scoringMultiplier": 1.5,
+      "stillUsesPinnedPackage": true
+    },
+    "at": 1794531600000,
+    "b": {
+      "activeRounds": [
+        "climber"
+      ],
+      "allowedAbilities": [
+        "shield"
+      ],
+      "allowedMaps": [
+        "frost-cavern",
+        "highland-pass"
+      ],
+      "currentPackageVersion": 2,
+      "events": [
+        {
+          "abilityId": null,
+          "at": 1794531600000,
+          "atLocal": "2026-11-13T09:00:00+08:00",
+          "basePoints": 10,
+          "contributingRounds": [
+            "climber"
+          ],
+          "kind": "map-result",
+          "mapId": "highland-pass",
+          "multiplier": 0.8,
+          "multiplierSource": "exclusive",
+          "packageDigest": "sha256:335653475c520b91bd3573cefc6b9f50a1292f1e838c7f3aa1a6c34ea246ea49",
+          "packageVersion": 2,
+          "perMapBonus": 0,
+          "points": 8,
+          "seq": 1,
+          "side": "a"
+        },
+        {
+          "abilityId": null,
+          "at": 1794531600000,
+          "atLocal": "2026-11-13T09:00:00+08:00",
+          "basePoints": 10,
+          "contributingRounds": [
+            "climber"
+          ],
+          "kind": "map-result",
+          "mapId": "highland-pass",
+          "multiplier": 0.8,
+          "multiplierSource": "exclusive",
+          "packageDigest": "sha256:335653475c520b91bd3573cefc6b9f50a1292f1e838c7f3aa1a6c34ea246ea49",
+          "packageVersion": 2,
+          "perMapBonus": 0,
+          "points": 8,
+          "seq": 2,
+          "side": "b"
+        }
+      ],
+      "frozenAt": 1794531600000,
+      "frozenAtLocal": "2026-11-13T09:00:00+08:00",
+      "matchId": "beta",
+      "observedAt": 1794531600000,
+      "observedAtLocal": "2026-11-13T09:00:00+08:00",
+      "packageDigest": "sha256:335653475c520b91bd3573cefc6b9f50a1292f1e838c7f3aa1a6c34ea246ea49",
+      "packageDigestShort": "33565347",
+      "packageVersion": 2,
+      "pinnedTo": "sha256:335653475c520b91bd3573cefc6b9f50a1292f1e838c7f3aa1a6c34ea246ea49",
+      "roundId": "climber",
+      "scores": {
+        "a": 8,
+        "b": 8
+      },
+      "scoringMultiplier": 0.8,
+      "stillUsesPinnedPackage": true
+    },
+    "differences": [
+      {
+        "a": 1,
+        "b": 2,
+        "field": "packageVersion"
+      },
+      {
+        "a": "sha256:2c094f8d5dbbf8b0e3eab88b95a983f3b81be83fcaecda7fa66842ecef8936c2",
+        "b": "sha256:335653475c520b91bd3573cefc6b9f50a1292f1e838c7f3aa1a6c34ea246ea49",
+        "field": "packageDigest"
+      },
+      {
+        "a": "sprint",
+        "b": "climber",
+        "field": "roundId"
+      },
+      {
+        "a": 1.5,
+        "b": 0.8,
+        "field": "scoringMultiplier"
+      },
+      {
+        "a": [
+          "highland-pass",
+          "neon-docks"
+        ],
+        "b": [
+          "frost-cavern",
+          "highland-pass"
+        ],
+        "field": "allowedMaps"
+      },
+      {
+        "a": [
+          "blink",
+          "drone",
+          "shield"
+        ],
+        "b": [
+          "shield"
+        ],
+        "field": "allowedAbilities"
+      },
+      {
+        "a": {
+          "a": 15,
+          "b": 15
+        },
+        "b": {
+          "a": 8,
+          "b": 8
+        },
+        "field": "scores"
+      }
+    ],
+    "samePackage": false,
+    "sameRules": false
+  },
+  "degradedCatalog": {
+    "errors": [
+      {
+        "code": "RESOURCE_REFERENCE_MISSING",
+        "details": {
+          "catalogDigest": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+          "missing": [
+            {
+              "contentId": "frost-cavern",
+              "kind": "map",
+              "path": "mapPool.ranked.maps"
+            },
+            {
+              "contentId": "frost-cavern",
+              "kind": "map",
+              "path": "mapPool.climber.maps"
+            }
+          ]
+        },
+        "message": "publish: package references content that is not defined",
+        "severity": "error"
+      }
+    ],
+    "reasonCodes": [
+      "RESOURCE_REFERENCE_MISSING"
+    ],
+    "status": "refused"
+  },
+  "engineRefusals": [
+    {
+      "at": 1794268800000,
+      "result": {
+        "catalog": {
+          "abilities": {
+            "blink": {
+              "contentId": "blink",
+              "name": "Blink",
+              "revision": 2,
+              "tags": [
+                "mobility"
+              ]
+            },
+            "drone": {
+              "contentId": "drone",
+              "name": "Recon Drone",
+              "revision": 2,
+              "tags": [
+                "utility"
+              ]
+            },
+            "shield": {
+              "contentId": "shield",
+              "name": "Shield Projector",
+              "revision": 1,
+              "tags": [
+                "defense"
+              ]
+            }
+          },
+          "format": "season-content",
+          "maps": {
+            "frost-cavern": {
+              "contentId": "frost-cavern",
+              "name": "Frost Cavern",
+              "revision": 1,
+              "tags": [
+                "outdoor",
+                "climber",
+                "winter"
+              ]
+            },
+            "highland-pass": {
+              "contentId": "highland-pass",
+              "name": "Highland Pass",
+              "revision": 2,
+              "tags": [
+                "outdoor",
+                "climber"
+              ]
+            },
+            "neon-docks": {
+              "contentId": "neon-docks",
+              "name": "Neon Docks",
+              "revision": 3,
+              "tags": [
+                "urban",
+                "sprint"
+              ]
+            }
+          },
+          "schemaVersion": 1
+        },
+        "catalogDigest": "sha256:4d00d1b33d3205145d3beade931c000acf2f603311329f0ff00488e1445b271c",
+        "errors": [
+          {
+            "code": "RESOURCE_REFERENCE_MISSING",
+            "details": {
+              "catalogDigest": "sha256:4d00d1b33d3205145d3beade931c000acf2f603311329f0ff00488e1445b271c",
+              "missing": [
+                {
+                  "contentId": "glacier-rift",
+                  "kind": "map",
+                  "path": "mapPool.winter.maps"
+                },
+                {
+                  "contentId": "grapple-hook",
+                  "kind": "ability",
+                  "path": "schedule.rounds.winter.effects"
+                },
+                {
+                  "contentId": "orbit-scan",
+                  "kind": "ability",
+                  "path": "schedule.rounds.winter.requiresAbilities"
+                }
+              ]
+            },
+            "message": "publish: package references content that is not defined",
+            "severity": "error"
+          }
+        ],
+        "id": "season-26-winter",
+        "label": "publish",
+        "missing": [
+          {
+            "contentId": "glacier-rift",
+            "kind": "map",
+            "path": "mapPool.winter.maps"
+          },
+          {
+            "contentId": "grapple-hook",
+            "kind": "ability",
+            "path": "schedule.rounds.winter.effects"
+          },
+          {
+            "contentId": "orbit-scan",
+            "kind": "ability",
+            "path": "schedule.rounds.winter.requiresAbilities"
+          }
+        ],
+        "reasonCodes": [
+          "RESOURCE_REFERENCE_MISSING"
+        ],
+        "stage": "assemble",
+        "status": "refused",
+        "summaryInputs": {
+          "abilities": "sha256:c944bb9b8b0f5b3330187efaa6638e0ff4bdeda9b8aeea78fd4944dafbd9a758",
+          "catalogDigest": "sha256:4d00d1b33d3205145d3beade931c000acf2f603311329f0ff00488e1445b271c",
+          "composition": "sha256:eaa99c4baf303bd04d9236320256f83b2068d443d4745c671fd2fdf22f195e73",
+          "defaults": "sha256:9861a3bfd590dad5e1b88afe8ab53bd4039e882f72cc9c4e8a13a9202ed4edbf",
+          "mapPool": "sha256:0979a855729a6fb705c649ae5fd5243b1bcc28326adacb91b87200e068f83b40",
+          "schedule": "sha256:3b44c55baf2d385f415432cf9951b6340f10cc7a0d97ba5537d084d6b261c9df",
+          "scoring": "sha256:901ba54d1f4fde5febfa3d8bb3c68dc3c1a97b593e71d2b575c3e2dc220a8028"
+        },
+        "warnings": []
+      },
+      "stage": "assemble"
+    },
+    {
+      "at": 1794571200000,
+      "result": {
+        "catalog": {
+          "abilities": {
+            "blink": {
+              "contentId": "blink",
+              "name": "Blink",
+              "revision": 2,
+              "tags": [
+                "mobility"
+              ]
+            },
+            "drone": {
+              "contentId": "drone",
+              "name": "Recon Drone",
+              "revision": 2,
+              "tags": [
+                "utility"
+              ]
+            },
+            "shield": {
+              "contentId": "shield",
+              "name": "Shield Projector",
+              "revision": 1,
+              "tags": [
+                "defense"
+              ]
+            }
+          },
+          "format": "season-content",
+          "maps": {
+            "highland-pass": {
+              "contentId": "highland-pass",
+              "name": "Highland Pass",
+              "revision": 2,
+              "tags": [
+                "outdoor",
+                "climber"
+              ]
+            },
+            "neon-docks": {
+              "contentId": "neon-docks",
+              "name": "Neon Docks",
+              "revision": 3,
+              "tags": [
+                "urban",
+                "sprint"
+              ]
+            }
+          },
+          "schemaVersion": 1
+        },
+        "catalogDigest": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+        "errors": [
+          {
+            "code": "RESOURCE_REFERENCE_MISSING",
+            "details": {
+              "catalogDigest": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+              "missing": [
+                {
+                  "contentId": "frost-cavern",
+                  "kind": "map",
+                  "path": "mapPool.ranked.maps"
+                },
+                {
+                  "contentId": "frost-cavern",
+                  "kind": "map",
+                  "path": "mapPool.climber.maps"
+                }
+              ]
+            },
+            "message": "publish: package references content that is not defined",
+            "severity": "error"
+          }
+        ],
+        "id": "season-26-autumn-v3",
+        "label": "publish",
+        "missing": [
+          {
+            "contentId": "frost-cavern",
+            "kind": "map",
+            "path": "mapPool.ranked.maps"
+          },
+          {
+            "contentId": "frost-cavern",
+            "kind": "map",
+            "path": "mapPool.climber.maps"
+          }
+        ],
+        "reasonCodes": [
+          "RESOURCE_REFERENCE_MISSING"
+        ],
+        "stage": "assemble",
+        "status": "refused",
+        "summaryInputs": {
+          "abilities": "sha256:7a322f8a65aa1e0f60a7a6064aae47c73acd385c24d9c053a5e45ff8e53cea67",
+          "catalogDigest": "sha256:0000000000000000000000000000000000000000000000000000000000000000",
+          "composition": "sha256:eaa99c4baf303bd04d9236320256f83b2068d443d4745c671fd2fdf22f195e73",
+          "defaults": "sha256:9861a3bfd590dad5e1b88afe8ab53bd4039e882f72cc9c4e8a13a9202ed4edbf",
+          "mapPool": "sha256:4e3c6135a07d21fee1b6d1f46252878ba41877dd982e5bfa6a2e61c712472b00",
+          "schedule": "sha256:c04d535295ccaacaee2339a9988b6dd1b18211c028f65b4d18eaf37bec577673",
+          "scoring": "sha256:901ba54d1f4fde5febfa3d8bb3c68dc3c1a97b593e71d2b575c3e2dc220a8028"
+        },
+        "warnings": []
+      },
+      "stage": "assemble"
+    }
+  ],
+  "history": [
+    {
+      "at": 1794268800000,
+      "digest": "sha256:2c094f8d5dbbf8b0e3eab88b95a983f3b81be83fcaecda7fa66842ecef8936c2",
+      "kind": "publish",
+      "version": 1
+    },
+    {
+      "at": 1794484800000,
+      "digest": "sha256:2c094f8d5dbbf8b0e3eab88b95a983f3b81be83fcaecda7fa66842ecef8936c2",
+      "kind": "start",
+      "matchId": "alpha",
+      "round": "sprint",
+      "version": 1
+    },
+    {
+      "at": 1794499200000,
+      "digest": "sha256:335653475c520b91bd3573cefc6b9f50a1292f1e838c7f3aa1a6c34ea246ea49",
+      "kind": "publish",
+      "version": 2
+    },
+    {
+      "at": 1794531600000,
+      "digest": "sha256:335653475c520b91bd3573cefc6b9f50a1292f1e838c7f3aa1a6c34ea246ea49",
+      "kind": "start",
+      "matchId": "beta",
+      "round": "climber",
+      "version": 2
+    },
+    {
+      "at": 1794571200000,
+      "digest": "sha256:f3b847f3868dff93bf1f87316390fe34368f1e5ad3741406b44c0dc1864e2e70",
+      "kind": "publish",
+      "version": 3
+    },
+    {
+      "at": 1794571200000,
+      "digest": "sha256:f3b847f3868dff93bf1f87316390fe34368f1e5ad3741406b44c0dc1864e2e70",
+      "kind": "rollback",
+      "newVersion": 3,
+      "toVersion": 1
+    }
+  ],
+  "inspect": {
+    "climber": {
+      "activeRounds": [
+        "climber"
+      ],
+      "allowedAbilities": [
+        "shield"
+      ],
+      "digest": "sha256:335653475c520b91bd3573cefc6b9f50a1292f1e838c7f3aa1a6c34ea246ea49",
+      "instant": 1794531600000,
+      "instantLocal": "2026-11-13T09:00:00+08:00",
+      "mapRules": {
+        "allowedMaps": [
+          "frost-cavern",
+          "highland-pass"
+        ],
+        "defaultMap": "highland-pass",
+        "poolId": "climber",
+        "reason": null,
+        "valid": true
+      },
+      "roundId": "climber",
+      "scoringMultiplier": 0.8,
+      "stacking": {
+        "compatible": true,
+        "reason": null,
+        "ties": [],
+        "winners": [
+          {
+            "abilityOverrides": {
+              "allow": [],
+              "defaultAllowed": null,
+              "deny": []
+            },
+            "effects": [
+              {
+                "kind": "scoring",
+                "label": "climb-handicap-v2",
+                "multiplier": 0.8
+              },
+              {
+                "allow": [],
+                "deny": [
+                  "blink"
+                ],
+                "kind": "ability",
+                "label": "no-blink"
+              }
+            ],
+            "endsAt": "2026-11-14T00:00:00",
+            "endsAtInstant": "2026-11-13T16:00:00.000Z",
+            "id": "climber",
+            "mapPoolId": "climber",
+            "meta": {
+              "name": "Climber Series"
+            },
+            "requiresAbilities": [],
+            "startsAt": "2026-11-13T00:00:00",
+            "startsAtInstant": "2026-11-12T16:00:00.000Z",
+            "winnerCondition": "score"
+          }
+        ]
+      },
+      "status": "ok",
+      "version": 2,
+      "winnerCondition": "score",
+      "winningRound": "climber"
+    },
+    "sprint": {
+      "activeRounds": [
+        "sprint"
+      ],
+      "allowedAbilities": [
+        "blink",
+        "drone",
+        "shield"
+      ],
+      "digest": "sha256:2c094f8d5dbbf8b0e3eab88b95a983f3b81be83fcaecda7fa66842ecef8936c2",
+      "instant": 1794484800000,
+      "instantLocal": "2026-11-12T20:00:00+08:00",
+      "mapRules": {
+        "allowedMaps": [
+          "highland-pass",
+          "neon-docks"
+        ],
+        "defaultMap": "neon-docks",
+        "poolId": "sprint",
+        "reason": null,
+        "valid": true
+      },
+      "roundId": "sprint",
+      "scoringMultiplier": 1.5,
+      "stacking": {
+        "compatible": true,
+        "reason": null,
+        "ties": [],
+        "winners": [
+          {
+            "abilityOverrides": {
+              "allow": [],
+              "defaultAllowed": null,
+              "deny": []
+            },
+            "effects": [
+              {
+                "kind": "scoring",
+                "label": "sprint-bonus",
+                "multiplier": 1.5
+              }
+            ],
+            "endsAt": "2026-11-13T00:00:00",
+            "endsAtInstant": "2026-11-12T16:00:00.000Z",
+            "id": "sprint",
+            "mapPoolId": "sprint",
+            "meta": {
+              "name": "Sprint Weekend"
+            },
+            "requiresAbilities": [
+              "blink"
+            ],
+            "startsAt": "2026-11-12T00:00:00",
+            "startsAtInstant": "2026-11-11T16:00:00.000Z",
+            "winnerCondition": "score"
+          }
+        ]
+      },
+      "status": "ok",
+      "version": 1,
+      "winnerCondition": "score",
+      "winningRound": "sprint"
+    }
+  },
+  "matches": {
+    "alpha": {
+      "events": [
+        {
+          "abilityId": null,
+          "at": 1794484800000,
+          "atLocal": "2026-11-12T20:00:00+08:00",
+          "basePoints": 10,
+          "contributingRounds": [
+            "sprint"
+          ],
+          "kind": "map-result",
+          "mapId": "neon-docks",
+          "multiplier": 1.5,
+          "multiplierSource": "exclusive",
+          "packageDigest": "sha256:2c094f8d5dbbf8b0e3eab88b95a983f3b81be83fcaecda7fa66842ecef8936c2",
+          "packageVersion": 1,
+          "perMapBonus": 0,
+          "points": 15,
+          "seq": 1,
+          "side": "a"
+        },
+        {
+          "abilityId": null,
+          "at": 1794484800000,
+          "atLocal": "2026-11-12T20:00:00+08:00",
+          "basePoints": 10,
+          "contributingRounds": [
+            "sprint"
+          ],
+          "kind": "map-result",
+          "mapId": "highland-pass",
+          "multiplier": 1.5,
+          "multiplierSource": "exclusive",
+          "packageDigest": "sha256:2c094f8d5dbbf8b0e3eab88b95a983f3b81be83fcaecda7fa66842ecef8936c2",
+          "packageVersion": 1,
+          "perMapBonus": 0,
+          "points": 15,
+          "seq": 2,
+          "side": "b"
+        }
+      ],
+      "pin": {
+        "digest": "sha256:2c094f8d5dbbf8b0e3eab88b95a983f3b81be83fcaecda7fa66842ecef8936c2",
+        "version": 1
+      },
+      "rulesView": {
+        "activeRounds": [
+          "sprint"
+        ],
+        "allowedAbilities": [
+          "blink",
+          "drone",
+          "shield"
+        ],
+        "allowedMaps": [
+          "highland-pass",
+          "neon-docks"
+        ],
+        "defaultMap": "neon-docks",
+        "mapRules": {
+          "allowedMaps": [
+            "highland-pass",
+            "neon-docks"
+          ],
+          "defaultMap": "neon-docks",
+          "poolId": "sprint",
+          "reason": null,
+          "valid": true
+        },
+        "multiplier": 1.5,
+        "packageDigest": "sha256:2c094f8d5dbbf8b0e3eab88b95a983f3b81be83fcaecda7fa66842ecef8936c2",
+        "packageVersion": 1,
+        "roundId": "sprint",
+        "stacking": {
+          "compatible": true,
+          "reason": null,
+          "ties": [],
+          "winners": [
+            {
+              "abilityOverrides": {
+                "allow": [],
+                "defaultAllowed": null,
+                "deny": []
+              },
+              "effects": [
+                {
+                  "kind": "scoring",
+                  "label": "sprint-bonus",
+                  "multiplier": 1.5
+                }
+              ],
+              "endsAt": "2026-11-13T00:00:00",
+              "endsAtInstant": "2026-11-12T16:00:00.000Z",
+              "id": "sprint",
+              "mapPoolId": "sprint",
+              "meta": {
+                "name": "Sprint Weekend"
+              },
+              "requiresAbilities": [
+                "blink"
+              ],
+              "startsAt": "2026-11-12T00:00:00",
+              "startsAtInstant": "2026-11-11T16:00:00.000Z",
+              "winnerCondition": "score"
+            }
+          ]
+        },
+        "winnerCondition": "score"
+      },
+      "scores": {
+        "a": 15,
+        "b": 15
+      }
+    },
+    "beta": {
+      "events": [
+        {
+          "abilityId": null,
+          "at": 1794531600000,
+          "atLocal": "2026-11-13T09:00:00+08:00",
+          "basePoints": 10,
+          "contributingRounds": [
+            "climber"
+          ],
+          "kind": "map-result",
+          "mapId": "highland-pass",
+          "multiplier": 0.8,
+          "multiplierSource": "exclusive",
+          "packageDigest": "sha256:335653475c520b91bd3573cefc6b9f50a1292f1e838c7f3aa1a6c34ea246ea49",
+          "packageVersion": 2,
+          "perMapBonus": 0,
+          "points": 8,
+          "seq": 1,
+          "side": "a"
+        },
+        {
+          "abilityId": null,
+          "at": 1794531600000,
+          "atLocal": "2026-11-13T09:00:00+08:00",
+          "basePoints": 10,
+          "contributingRounds": [
+            "climber"
+          ],
+          "kind": "map-result",
+          "mapId": "highland-pass",
+          "multiplier": 0.8,
+          "multiplierSource": "exclusive",
+          "packageDigest": "sha256:335653475c520b91bd3573cefc6b9f50a1292f1e838c7f3aa1a6c34ea246ea49",
+          "packageVersion": 2,
+          "perMapBonus": 0,
+          "points": 8,
+          "seq": 2,
+          "side": "b"
+        }
+      ],
+      "pin": {
+        "digest": "sha256:335653475c520b91bd3573cefc6b9f50a1292f1e838c7f3aa1a6c34ea246ea49",
+        "version": 2
+      },
+      "rulesView": {
+        "activeRounds": [
+          "climber"
+        ],
+        "allowedAbilities": [
+          "shield"
+        ],
+        "allowedMaps": [
+          "frost-cavern",
+          "highland-pass"
+        ],
+        "defaultMap": "highland-pass",
+        "mapRules": {
+          "allowedMaps": [
+            "frost-cavern",
+            "highland-pass"
+          ],
+          "defaultMap": "highland-pass",
+          "poolId": "climber",
+          "reason": null,
+          "valid": true
+        },
+        "multiplier": 0.8,
+        "packageDigest": "sha256:335653475c520b91bd3573cefc6b9f50a1292f1e838c7f3aa1a6c34ea246ea49",
+        "packageVersion": 2,
+        "roundId": "climber",
+        "stacking": {
+          "compatible": true,
+          "reason": null,
+          "ties": [],
+          "winners": [
+            {
+              "abilityOverrides": {
+                "allow": [],
+                "defaultAllowed": null,
+                "deny": []
+              },
+              "effects": [
+                {
+                  "kind": "scoring",
+                  "label": "climb-handicap-v2",
+                  "multiplier": 0.8
+                },
+                {
+                  "allow": [],
+                  "deny": [
+                    "blink"
+                  ],
+                  "kind": "ability",
+                  "label": "no-blink"
+                }
+              ],
+              "endsAt": "2026-11-14T00:00:00",
+              "endsAtInstant": "2026-11-13T16:00:00.000Z",
+              "id": "climber",
+              "mapPoolId": "climber",
+              "meta": {
+                "name": "Climber Series"
+              },
+              "requiresAbilities": [],
+              "startsAt": "2026-11-13T00:00:00",
+              "startsAtInstant": "2026-11-12T16:00:00.000Z",
+              "winnerCondition": "score"
+            }
+          ]
+        },
+        "winnerCondition": "score"
+      },
+      "scores": {
+        "a": 8,
+        "b": 8
+      }
+    }
+  },
+  "offlineInspect": {
+    "covered": {
+      "activeRounds": [
+        "sprint"
+      ],
+      "allowedAbilities": [
+        "blink",
+        "drone",
+        "shield"
+      ],
+      "digest": "sha256:2c094f8d5dbbf8b0e3eab88b95a983f3b81be83fcaecda7fa66842ecef8936c2",
+      "instant": 1794484800000,
+      "instantLocal": "2026-11-12T20:00:00+08:00",
+      "mapRules": {
+        "allowedMaps": [
+          "highland-pass",
+          "neon-docks"
+        ],
+        "defaultMap": "neon-docks",
+        "poolId": "sprint",
+        "reason": null,
+        "valid": true
+      },
+      "roundId": "sprint",
+      "scoringMultiplier": 1.5,
+      "stacking": {
+        "compatible": true,
+        "reason": null,
+        "ties": [],
+        "winners": [
+          {
+            "abilityOverrides": {
+              "allow": [],
+              "defaultAllowed": null,
+              "deny": []
+            },
+            "effects": [
+              {
+                "kind": "scoring",
+                "label": "sprint-bonus",
+                "multiplier": 1.5
+              }
+            ],
+            "endsAt": "2026-11-13T00:00:00",
+            "endsAtInstant": "2026-11-12T16:00:00.000Z",
+            "id": "sprint",
+            "mapPoolId": "sprint",
+            "meta": {
+              "name": "Sprint Weekend"
+            },
+            "requiresAbilities": [
+              "blink"
+            ],
+            "startsAt": "2026-11-12T00:00:00",
+            "startsAtInstant": "2026-11-11T16:00:00.000Z",
+            "winnerCondition": "score"
+          }
+        ]
+      },
+      "status": "ok",
+      "version": null,
+      "winnerCondition": "score",
+      "winningRound": "sprint"
+    },
+    "hole": {
+      "digest": "sha256:8cb5311f276f47e468bb9a5f0aa5808f70a58b6831eb806551d44f8a73ec2235",
+      "mapRules": {
+        "allowedMaps": [],
+        "defaultMap": null,
+        "poolId": null,
+        "reason": "NO_DEFAULT_POOL",
+        "valid": false
+      },
+      "reason": "NO_FALLBACK_POOL",
+      "roundIds": [],
+      "status": "blocked"
+    }
+  },
+  "publishV1": {
+    "digest": "sha256:2c094f8d5dbbf8b0e3eab88b95a983f3b81be83fcaecda7fa66842ecef8936c2",
+    "effectiveFrom": "2026-11-11T16:00:00.000Z",
+    "status": "published",
+    "summary": {
+      "catalogDigest": "sha256:4d00d1b33d3205145d3beade931c000acf2f603311329f0ff00488e1445b271c",
+      "catalogDigestShort": "4d00d1b3",
+      "content": {
+        "abilities": [
+          "blink",
+          "drone",
+          "shield"
+        ],
+        "mapPools": [
+          "climber",
+          "ranked",
+          "sprint"
+        ],
+        "maps": [
+          "frost-cavern",
+          "highland-pass",
+          "neon-docks"
+        ],
+        "rounds": [
+          {
+            "effects": [
+              {
+                "kind": "scoring",
+                "label": "sprint-bonus",
+                "multiplier": 1.5
+              }
+            ],
+            "endsAt": "2026-11-13T00:00:00",
+            "endsAtInstant": "2026-11-12T16:00:00.000Z",
+            "id": "sprint",
+            "mapPoolId": "sprint",
+            "startsAt": "2026-11-12T00:00:00",
+            "startsAtInstant": "2026-11-11T16:00:00.000Z",
+            "winnerCondition": "score"
+          },
+          {
+            "effects": [
+              {
+                "kind": "scoring",
+                "label": "climb-handicap",
+                "multiplier": 0.5
+              },
+              {
+                "allow": [],
+                "deny": [
+                  "blink"
+                ],
+                "kind": "ability",
+                "label": "no-blink"
+              }
+            ],
+            "endsAt": "2026-11-14T00:00:00",
+            "endsAtInstant": "2026-11-13T16:00:00.000Z",
+            "id": "climber",
+            "mapPoolId": "climber",
+            "startsAt": "2026-11-13T00:00:00",
+            "startsAtInstant": "2026-11-12T16:00:00.000Z",
+            "winnerCondition": "score"
+          }
+        ],
+        "tags": [
+          "climber",
+          "defense",
+          "mobility",
+          "outdoor",
+          "sprint",
+          "urban",
+          "utility",
+          "winter"
+        ]
+      },
+      "digest": "sha256:2c094f8d5dbbf8b0e3eab88b95a983f3b81be83fcaecda7fa66842ecef8936c2",
+      "digestShort": "2c094f8d",
+      "displayName": "Autumn Season — baseline",
+      "notes": "v1 baseline: 10/base, 1.5x sprint, 0.5x climber",
+      "packageId": "season-26-autumn",
+      "publishedAt": "2026-11-10T00:00:00.000Z",
+      "summaryInputs": {
+        "abilities": "sha256:c944bb9b8b0f5b3330187efaa6638e0ff4bdeda9b8aeea78fd4944dafbd9a758",
+        "catalogDigest": "sha256:4d00d1b33d3205145d3beade931c000acf2f603311329f0ff00488e1445b271c",
+        "composition": "sha256:eaa99c4baf303bd04d9236320256f83b2068d443d4745c671fd2fdf22f195e73",
+        "defaults": "sha256:9861a3bfd590dad5e1b88afe8ab53bd4039e882f72cc9c4e8a13a9202ed4edbf",
+        "mapPool": "sha256:4e3c6135a07d21fee1b6d1f46252878ba41877dd982e5bfa6a2e61c712472b00",
+        "schedule": "sha256:8a791bdac2be5dc3123de5c8b5fc22748429ac5a3af4b5daf473b95e79fb9b1e",
+        "scoring": "sha256:901ba54d1f4fde5febfa3d8bb3c68dc3c1a97b593e71d2b575c3e2dc220a8028"
+      },
+      "timeZone": "Asia/Shanghai"
+    },
+    "version": 1,
+    "warnings": []
+  },
+  "publishV2": {
+    "digest": "sha256:335653475c520b91bd3573cefc6b9f50a1292f1e838c7f3aa1a6c34ea246ea49",
+    "status": "published",
+    "version": 2
+  },
+  "refusals": {
+    "excludedOverlap": {
+      "status": "published",
+      "version": 1,
+      "warnings": [
+        {
+          "code": "ROUND_OVERLAP_BLOCKED",
+          "details": {
+            "resolution": "excluded",
+            "rounds": [
+              "sprint",
+              "climber"
+            ]
+          },
+          "message": "publish: rounds sprint and climber overlap and are mutually exclusive",
+          "severity": "warning"
+        },
+        {
+          "code": "ROUND_WINDOW_OVERLAP",
+          "details": {
+            "rounds": [
+              "climber",
+              "sprint"
+            ]
+          },
+          "message": "publish: round sprint starts before climber ends",
+          "severity": "warning"
+        }
+      ]
+    },
+    "gapPackage": {
+      "status": "published",
+      "warnings": [
+        {
+          "code": "SCHEDULE_GAP",
+          "details": {
+            "afterRound": "sprint",
+            "beforeRound": "climber",
+            "coveredByDefaultPool": false,
+            "gapEnd": "2026-11-14T16:00:00.000Z",
+            "gapEndLocal": "2026-11-15T00:00:00",
+            "gapStart": "2026-11-12T16:00:00.000Z",
+            "gapStartLocal": "2026-11-13T00:00:00"
+          },
+          "message": "publish: no round covers the gap after sprint",
+          "severity": "warning"
+        },
+        {
+          "code": "SCHEDULE_GAP_NO_FALLBACK",
+          "details": {
+            "afterRound": "sprint",
+            "beforeRound": "climber"
+          },
+          "message": "publish: gap after sprint has no defaults.mapPoolId fallback",
+          "severity": "warning"
+        }
+      ]
+    },
+    "invalidResource": {
+      "errors": [
+        {
+          "code": "RESOURCE_REFERENCE_MISSING",
+          "details": {
+            "catalogDigest": "sha256:4d00d1b33d3205145d3beade931c000acf2f603311329f0ff00488e1445b271c",
+            "missing": [
+              {
+                "contentId": "glacier-rift",
+                "kind": "map",
+                "path": "mapPool.winter.maps"
+              },
+              {
+                "contentId": "grapple-hook",
+                "kind": "ability",
+                "path": "schedule.rounds.winter.effects"
+              },
+              {
+                "contentId": "orbit-scan",
+                "kind": "ability",
+                "path": "schedule.rounds.winter.requiresAbilities"
+              }
+            ]
+          },
+          "message": "publish: package references content that is not defined",
+          "severity": "error"
+        }
+      ],
+      "reasonCodes": [
+        "RESOURCE_REFERENCE_MISSING"
+      ],
+      "status": "refused"
+    },
+    "priorityOverlap": {
+      "status": "published",
+      "version": 1,
+      "warnings": [
+        {
+          "code": "ROUND_OVERLAP_SUPERSEDED",
+          "details": {
+            "precedence": "declared",
+            "rounds": [
+              "sprint",
+              "climber"
+            ],
+            "winner": "sprint"
+          },
+          "message": "publish: overlapping rounds resolve to sprint",
+          "severity": "warning"
+        },
+        {
+          "code": "ROUND_WINDOW_OVERLAP",
+          "details": {
+            "rounds": [
+              "climber",
+              "sprint"
+            ]
+          },
+          "message": "publish: round sprint starts before climber ends",
+          "severity": "warning"
+        }
+      ]
+    },
+    "unresolvedOverlap": {
+      "errors": [
+        {
+          "code": "ROUND_OVERLAP_UNRESOLVED",
+          "details": {
+            "hint": "declare composition.priority with precedence=declared, or list the pair in composition.exclusions",
+            "precedence": "newest",
+            "reason": "UNRESOLVED_TIE",
+            "rounds": [
+              "sprint",
+              "climber"
+            ]
+          },
+          "message": "publish: rounds overlap without deterministic precedence",
+          "severity": "error"
+        }
+      ],
+      "reasonCodes": [
+        "ROUND_OVERLAP_UNRESOLVED"
+      ],
+      "status": "refused"
+    }
+  },
+  "rollback": {
+    "digest": "sha256:f3b847f3868dff93bf1f87316390fe34368f1e5ad3741406b44c0dc1864e2e70",
+    "resolveAlpha": {
+      "currentDigest": "sha256:f3b847f3868dff93bf1f87316390fe34368f1e5ad3741406b44c0dc1864e2e70",
+      "currentVersion": 3,
+      "matchId": "alpha",
+      "mustContinueWith": 1,
+      "ok": true,
+      "pinnedDigest": "sha256:2c094f8d5dbbf8b0e3eab88b95a983f3b81be83fcaecda7fa66842ecef8936c2",
+      "pinnedVersion": 1,
+      "reasons": []
+    },
+    "resolveBeta": {
+      "currentDigest": "sha256:f3b847f3868dff93bf1f87316390fe34368f1e5ad3741406b44c0dc1864e2e70",
+      "currentVersion": 3,
+      "matchId": "beta",
+      "mustContinueWith": 2,
+      "ok": true,
+      "pinnedDigest": "sha256:335653475c520b91bd3573cefc6b9f50a1292f1e838c7f3aa1a6c34ea246ea49",
+      "pinnedVersion": 2,
+      "reasons": []
+    },
+    "status": "published",
+    "version": 3
+  },
+  "selectBoundary": {
+    "at": {
+      "digest": "sha256:2c094f8d5dbbf8b0e3eab88b95a983f3b81be83fcaecda7fa66842ecef8936c2",
+      "entry": {
+        "catalog": {
+          "abilities": {
+            "blink": {
+              "contentId": "blink",
+              "name": "Blink",
+              "revision": 2,
+              "tags": [
+                "mobility"
+              ]
+            },
+            "drone": {
+              "contentId": "drone",
+              "name": "Recon Drone",
+              "revision": 2,
+              "tags": [
+                "utility"
+              ]
+            },
+            "shield": {
+              "contentId": "shield",
+              "name": "Shield Projector",
+              "revision": 1,
+              "tags": [
+                "defense"
+              ]
+            }
+          },
+          "format": "season-content",
+          "maps": {
+            "frost-cavern": {
+              "contentId": "frost-cavern",
+              "name": "Frost Cavern",
+              "revision": 1,
+              "tags": [
+                "outdoor",
+                "climber",
+                "winter"
+              ]
+            },
+            "highland-pass": {
+              "contentId": "highland-pass",
+              "name": "Highland Pass",
+              "revision": 2,
+              "tags": [
+                "outdoor",
+                "climber"
+              ]
+            },
+            "neon-docks": {
+              "contentId": "neon-docks",
+              "name": "Neon Docks",
+              "revision": 3,
+              "tags": [
+                "urban",
+                "sprint"
+              ]
+            }
+          },
+          "schemaVersion": 1
+        },
+        "catalogDigest": "sha256:4d00d1b33d3205145d3beade931c000acf2f603311329f0ff00488e1445b271c",
+        "diagnostics": {
+          "summaryInputs": {
+            "abilities": "sha256:c944bb9b8b0f5b3330187efaa6638e0ff4bdeda9b8aeea78fd4944dafbd9a758",
+            "catalogDigest": "sha256:4d00d1b33d3205145d3beade931c000acf2f603311329f0ff00488e1445b271c",
+            "composition": "sha256:eaa99c4baf303bd04d9236320256f83b2068d443d4745c671fd2fdf22f195e73",
+            "defaults": "sha256:9861a3bfd590dad5e1b88afe8ab53bd4039e882f72cc9c4e8a13a9202ed4edbf",
+            "mapPool": "sha256:4e3c6135a07d21fee1b6d1f46252878ba41877dd982e5bfa6a2e61c712472b00",
+            "schedule": "sha256:8a791bdac2be5dc3123de5c8b5fc22748429ac5a3af4b5daf473b95e79fb9b1e",
+            "scoring": "sha256:901ba54d1f4fde5febfa3d8bb3c68dc3c1a97b593e71d2b575c3e2dc220a8028"
+          },
+          "warnings": []
+        },
+        "digest": "sha256:2c094f8d5dbbf8b0e3eab88b95a983f3b81be83fcaecda7fa66842ecef8936c2",
+        "displayName": "Autumn Season — baseline",
+        "effectiveFrom": "2026-11-11T16:00:00.000Z",
+        "effectiveFromLocal": "2026-11-12T00:00:00+08:00",
+        "materializedInputs": {
+          "abilities": {
+            "allow": [],
+            "defaultAllowed": true,
+            "deny": []
+          },
+          "composition": {
+            "allowTies": false,
+            "combine": "exclusive",
+            "exclusions": [],
+            "precedence": "newest",
+            "priority": []
+          },
+          "defaults": {
+            "mapPoolId": "ranked"
+          },
+          "displayName": "Autumn Season — baseline",
+          "id": "season-26-autumn",
+          "mapPool": {
+            "climber": {
+              "defaultMap": "highland-pass",
+              "maps": [
+                "highland-pass",
+                "frost-cavern"
+              ]
+            },
+            "ranked": {
+              "defaultMap": "neon-docks",
+              "maps": [
+                "neon-docks",
+                "highland-pass",
+                "frost-cavern"
+              ]
+            },
+            "sprint": {
+              "defaultMap": "neon-docks",
+              "maps": [
+                "neon-docks",
+                "highland-pass"
+              ]
+            }
+          },
+          "notes": "v1 baseline: 10/base, 1.5x sprint, 0.5x climber",
+          "options": {
+            "basePoints": 10,
+            "climberMultiplier": 0.5,
+            "sprintMultiplier": 1.5
+          },
+          "publishedAt": "2026-11-10T00:00:00.000Z",
+          "schedule": {
+            "rounds": [
+              {
+                "effects": [
+                  {
+                    "kind": "scoring",
+                    "label": "sprint-bonus",
+                    "multiplier": 1.5
+                  }
+                ],
+                "endsAt": "2026-11-13T00:00:00",
+                "id": "sprint",
+                "mapPoolId": "sprint",
+                "name": "Sprint Weekend",
+                "requiresAbilities": [
+                  "blink"
+                ],
+                "startsAt": "2026-11-12T00:00:00",
+                "winnerCondition": "score"
+              },
+              {
+                "effects": [
+                  {
+                    "kind": "scoring",
+                    "label": "climb-handicap",
+                    "multiplier": 0.5
+                  },
+                  {
+                    "allow": [],
+                    "deny": [
+                      "blink"
+                    ],
+                    "kind": "ability",
+                    "label": "no-blink"
+                  }
+                ],
+                "endsAt": "2026-11-14T00:00:00",
+                "id": "climber",
+                "mapPoolId": "climber",
+                "name": "Climber Series",
+                "startsAt": "2026-11-13T00:00:00",
+                "winnerCondition": "score"
+              }
+            ]
+          },
+          "scoring": {
+            "base": 10,
+            "categories": [
+              "sprint"
+            ],
+            "perMapBonus": {
+              "frost-cavern": 2
+            }
+          },
+          "timeZone": "Asia/Shanghai"
+        },
+        "options": {
+          "basePoints": 10,
+          "climberMultiplier": 0.5,
+          "sprintMultiplier": 1.5
+        },
+        "pkg": {
+          "abilities": {
+            "allow": [],
+            "defaultAllowed": true,
+            "deny": []
+          },
+          "catalogDigest": "sha256:4d00d1b33d3205145d3beade931c000acf2f603311329f0ff00488e1445b271c",
+          "composition": {
+            "allowTies": false,
+            "combine": "exclusive",
+            "exclusions": [],
+            "precedence": "newest",
+            "priority": []
+          },
+          "defaults": {
+            "mapPoolId": "ranked"
+          },
+          "format": "season-rule-package",
+          "id": "season-26-autumn",
+          "identity": {
+            "algorithm": "sha256",
+            "digest": "sha256:2c094f8d5dbbf8b0e3eab88b95a983f3b81be83fcaecda7fa66842ecef8936c2",
+            "scope": "package-core"
+          },
+          "mapPool": {
+            "climber": {
+              "defaultMap": "highland-pass",
+              "maps": [
+                "frost-cavern",
+                "highland-pass"
+              ]
+            },
+            "ranked": {
+              "defaultMap": "neon-docks",
+              "maps": [
+                "frost-cavern",
+                "highland-pass",
+                "neon-docks"
+              ]
+            },
+            "sprint": {
+              "defaultMap": "neon-docks",
+              "maps": [
+                "highland-pass",
+                "neon-docks"
+              ]
+            }
+          },
+          "publishedAt": "2026-11-10T00:00:00.000Z",
+          "schedule": {
+            "rounds": [
+              {
+                "abilityOverrides": {
+                  "allow": [],
+                  "defaultAllowed": null,
+                  "deny": []
+                },
+                "effects": [
+                  {
+                    "kind": "scoring",
+                    "label": "sprint-bonus",
+                    "multiplier": 1.5
+                  }
+                ],
+                "endsAt": "2026-11-13T00:00:00",
+                "endsAtInstant": "2026-11-12T16:00:00.000Z",
+                "id": "sprint",
+                "mapPoolId": "sprint",
+                "meta": {
+                  "name": "Sprint Weekend"
+                },
+                "requiresAbilities": [
+                  "blink"
+                ],
+                "startsAt": "2026-11-12T00:00:00",
+                "startsAtInstant": "2026-11-11T16:00:00.000Z",
+                "winnerCondition": "score"
+              },
+              {
+                "abilityOverrides": {
+                  "allow": [],
+                  "defaultAllowed": null,
+                  "deny": []
+                },
+                "effects": [
+                  {
+                    "kind": "scoring",
+                    "label": "climb-handicap",
+                    "multiplier": 0.5
+                  },
+                  {
+                    "allow": [],
+                    "deny": [
+                      "blink"
+                    ],
+                    "kind": "ability",
+                    "label": "no-blink"
+                  }
+                ],
+                "endsAt": "2026-11-14T00:00:00",
+                "endsAtInstant": "2026-11-13T16:00:00.000Z",
+                "id": "climber",
+                "mapPoolId": "climber",
+                "meta": {
+                  "name": "Climber Series"
+                },
+                "requiresAbilities": [],
+                "startsAt": "2026-11-13T00:00:00",
+                "startsAtInstant": "2026-11-12T16:00:00.000Z",
+                "winnerCondition": "score"
+              }
+            ]
+          },
+          "schemaVersion": 2,
+          "scoring": {
+            "base": 10,
+            "categories": [
+              "sprint"
+            ],
+            "perMapBonus": {
+              "frost-cavern": 2
+            }
+          },
+          "timeZone": "Asia/Shanghai"
+        },
+        "summary": {
+          "catalogDigest": "sha256:4d00d1b33d3205145d3beade931c000acf2f603311329f0ff00488e1445b271c",
+          "catalogDigestShort": "4d00d1b3",
+          "content": {
+            "abilities": [
+              "blink",
+              "drone",
+              "shield"
+            ],
+            "mapPools": [
+              "climber",
+              "ranked",
+              "sprint"
+            ],
+            "maps": [
+              "frost-cavern",
+              "highland-pass",
+              "neon-docks"
+            ],
+            "rounds": [
+              {
+                "effects": [
+                  {
+                    "kind": "scoring",
+                    "label": "sprint-bonus",
+                    "multiplier": 1.5
+                  }
+                ],
+                "endsAt": "2026-11-13T00:00:00",
+                "endsAtInstant": "2026-11-12T16:00:00.000Z",
+                "id": "sprint",
+                "mapPoolId": "sprint",
+                "startsAt": "2026-11-12T00:00:00",
+                "startsAtInstant": "2026-11-11T16:00:00.000Z",
+                "winnerCondition": "score"
+              },
+              {
+                "effects": [
+                  {
+                    "kind": "scoring",
+                    "label": "climb-handicap",
+                    "multiplier": 0.5
+                  },
+                  {
+                    "allow": [],
+                    "deny": [
+                      "blink"
+                    ],
+                    "kind": "ability",
+                    "label": "no-blink"
+                  }
+                ],
+                "endsAt": "2026-11-14T00:00:00",
+                "endsAtInstant": "2026-11-13T16:00:00.000Z",
+                "id": "climber",
+                "mapPoolId": "climber",
+                "startsAt": "2026-11-13T00:00:00",
+                "startsAtInstant": "2026-11-12T16:00:00.000Z",
+                "winnerCondition": "score"
+              }
+            ],
+            "tags": [
+              "climber",
+              "defense",
+              "mobility",
+              "outdoor",
+              "sprint",
+              "urban",
+              "utility",
+              "winter"
+            ]
+          },
+          "digest": "sha256:2c094f8d5dbbf8b0e3eab88b95a983f3b81be83fcaecda7fa66842ecef8936c2",
+          "digestShort": "2c094f8d",
+          "displayName": "Autumn Season — baseline",
+          "notes": "v1 baseline: 10/base, 1.5x sprint, 0.5x climber",
+          "packageId": "season-26-autumn",
+          "publishedAt": "2026-11-10T00:00:00.000Z",
+          "summaryInputs": {
+            "abilities": "sha256:c944bb9b8b0f5b3330187efaa6638e0ff4bdeda9b8aeea78fd4944dafbd9a758",
+            "catalogDigest": "sha256:4d00d1b33d3205145d3beade931c000acf2f603311329f0ff00488e1445b271c",
+            "composition": "sha256:eaa99c4baf303bd04d9236320256f83b2068d443d4745c671fd2fdf22f195e73",
+            "defaults": "sha256:9861a3bfd590dad5e1b88afe8ab53bd4039e882f72cc9c4e8a13a9202ed4edbf",
+            "mapPool": "sha256:4e3c6135a07d21fee1b6d1f46252878ba41877dd982e5bfa6a2e61c712472b00",
+            "schedule": "sha256:8a791bdac2be5dc3123de5c8b5fc22748429ac5a3af4b5daf473b95e79fb9b1e",
+            "scoring": "sha256:901ba54d1f4fde5febfa3d8bb3c68dc3c1a97b593e71d2b575c3e2dc220a8028"
+          },
+          "timeZone": "Asia/Shanghai"
+        },
+        "version": 1
+      },
+      "instant": 1794412800000,
+      "pinnedEntry": {
+        "catalog": {
+          "abilities": {
+            "blink": {
+              "contentId": "blink",
+              "name": "Blink",
+              "revision": 2,
+              "tags": [
+                "mobility"
+              ]
+            },
+            "drone": {
+              "contentId": "drone",
+              "name": "Recon Drone",
+              "revision": 2,
+              "tags": [
+                "utility"
+              ]
+            },
+            "shield": {
+              "contentId": "shield",
+              "name": "Shield Projector",
+              "revision": 1,
+              "tags": [
+                "defense"
+              ]
+            }
+          },
+          "format": "season-content",
+          "maps": {
+            "frost-cavern": {
+              "contentId": "frost-cavern",
+              "name": "Frost Cavern",
+              "revision": 1,
+              "tags": [
+                "outdoor",
+                "climber",
+                "winter"
+              ]
+            },
+            "highland-pass": {
+              "contentId": "highland-pass",
+              "name": "Highland Pass",
+              "revision": 2,
+              "tags": [
+                "outdoor",
+                "climber"
+              ]
+            },
+            "neon-docks": {
+              "contentId": "neon-docks",
+              "name": "Neon Docks",
+              "revision": 3,
+              "tags": [
+                "urban",
+                "sprint"
+              ]
+            }
+          },
+          "schemaVersion": 1
+        },
+        "catalogDigest": "sha256:4d00d1b33d3205145d3beade931c000acf2f603311329f0ff00488e1445b271c",
+        "diagnostics": {
+          "summaryInputs": {
+            "abilities": "sha256:c944bb9b8b0f5b3330187efaa6638e0ff4bdeda9b8aeea78fd4944dafbd9a758",
+            "catalogDigest": "sha256:4d00d1b33d3205145d3beade931c000acf2f603311329f0ff00488e1445b271c",
+            "composition": "sha256:eaa99c4baf303bd04d9236320256f83b2068d443d4745c671fd2fdf22f195e73",
+            "defaults": "sha256:9861a3bfd590dad5e1b88afe8ab53bd4039e882f72cc9c4e8a13a9202ed4edbf",
+            "mapPool": "sha256:4e3c6135a07d21fee1b6d1f46252878ba41877dd982e5bfa6a2e61c712472b00",
+            "schedule": "sha256:8a791bdac2be5dc3123de5c8b5fc22748429ac5a3af4b5daf473b95e79fb9b1e",
+            "scoring": "sha256:901ba54d1f4fde5febfa3d8bb3c68dc3c1a97b593e71d2b575c3e2dc220a8028"
+          },
+          "warnings": []
+        },
+        "digest": "sha256:2c094f8d5dbbf8b0e3eab88b95a983f3b81be83fcaecda7fa66842ecef8936c2",
+        "displayName": "Autumn Season — baseline",
+        "effectiveFrom": "2026-11-11T16:00:00.000Z",
+        "effectiveFromLocal": "2026-11-12T00:00:00+08:00",
+        "materializedInputs": {
+          "abilities": {
+            "allow": [],
+            "defaultAllowed": true,
+            "deny": []
+          },
+          "composition": {
+            "allowTies": false,
+            "combine": "exclusive",
+            "exclusions": [],
+            "precedence": "newest",
+            "priority": []
+          },
+          "defaults": {
+            "mapPoolId": "ranked"
+          },
+          "displayName": "Autumn Season — baseline",
+          "id": "season-26-autumn",
+          "mapPool": {
+            "climber": {
+              "defaultMap": "highland-pass",
+              "maps": [
+                "highland-pass",
+                "frost-cavern"
+              ]
+            },
+            "ranked": {
+              "defaultMap": "neon-docks",
+              "maps": [
+                "neon-docks",
+                "highland-pass",
+                "frost-cavern"
+              ]
+            },
+            "sprint": {
+              "defaultMap": "neon-docks",
+              "maps": [
+                "neon-docks",
+                "highland-pass"
+              ]
+            }
+          },
+          "notes": "v1 baseline: 10/base, 1.5x sprint, 0.5x climber",
+          "options": {
+            "basePoints": 10,
+            "climberMultiplier": 0.5,
+            "sprintMultiplier": 1.5
+          },
+          "publishedAt": "2026-11-10T00:00:00.000Z",
+          "schedule": {
+            "rounds": [
+              {
+                "effects": [
+                  {
+                    "kind": "scoring",
+                    "label": "sprint-bonus",
+                    "multiplier": 1.5
+                  }
+                ],
+                "endsAt": "2026-11-13T00:00:00",
+                "id": "sprint",
+                "mapPoolId": "sprint",
+                "name": "Sprint Weekend",
+                "requiresAbilities": [
+                  "blink"
+                ],
+                "startsAt": "2026-11-12T00:00:00",
+                "winnerCondition": "score"
+              },
+              {
+                "effects": [
+                  {
+                    "kind": "scoring",
+                    "label": "climb-handicap",
+                    "multiplier": 0.5
+                  },
+                  {
+                    "allow": [],
+                    "deny": [
+                      "blink"
+                    ],
+                    "kind": "ability",
+                    "label": "no-blink"
+                  }
+                ],
+                "endsAt": "2026-11-14T00:00:00",
+                "id": "climber",
+                "mapPoolId": "climber",
+                "name": "Climber Series",
+                "startsAt": "2026-11-13T00:00:00",
+                "winnerCondition": "score"
+              }
+            ]
+          },
+          "scoring": {
+            "base": 10,
+            "categories": [
+              "sprint"
+            ],
+            "perMapBonus": {
+              "frost-cavern": 2
+            }
+          },
+          "timeZone": "Asia/Shanghai"
+        },
+        "options": {
+          "basePoints": 10,
+          "climberMultiplier": 0.5,
+          "sprintMultiplier": 1.5
+        },
+        "pkg": {
+          "abilities": {
+            "allow": [],
+            "defaultAllowed": true,
+            "deny": []
+          },
+          "catalogDigest": "sha256:4d00d1b33d3205145d3beade931c000acf2f603311329f0ff00488e1445b271c",
+          "composition": {
+            "allowTies": false,
+            "combine": "exclusive",
+            "exclusions": [],
+            "precedence": "newest",
+            "priority": []
+          },
+          "defaults": {
+            "mapPoolId": "ranked"
+          },
+          "format": "season-rule-package",
+          "id": "season-26-autumn",
+          "identity": {
+            "algorithm": "sha256",
+            "digest": "sha256:2c094f8d5dbbf8b0e3eab88b95a983f3b81be83fcaecda7fa66842ecef8936c2",
+            "scope": "package-core"
+          },
+          "mapPool": {
+            "climber": {
+              "defaultMap": "highland-pass",
+              "maps": [
+                "frost-cavern",
+                "highland-pass"
+              ]
+            },
+            "ranked": {
+              "defaultMap": "neon-docks",
+              "maps": [
+                "frost-cavern",
+                "highland-pass",
+                "neon-docks"
+              ]
+            },
+            "sprint": {
+              "defaultMap": "neon-docks",
+              "maps": [
+                "highland-pass",
+                "neon-docks"
+              ]
+            }
+          },
+          "publishedAt": "2026-11-10T00:00:00.000Z",
+          "schedule": {
+            "rounds": [
+              {
+                "abilityOverrides": {
+                  "allow": [],
+                  "defaultAllowed": null,
+                  "deny": []
+                },
+                "effects": [
+                  {
+                    "kind": "scoring",
+                    "label": "sprint-bonus",
+                    "multiplier": 1.5
+                  }
+                ],
+                "endsAt": "2026-11-13T00:00:00",
+                "endsAtInstant": "2026-11-12T16:00:00.000Z",
+                "id": "sprint",
+                "mapPoolId": "sprint",
+                "meta": {
+                  "name": "Sprint Weekend"
+                },
+                "requiresAbilities": [
+                  "blink"
+                ],
+                "startsAt": "2026-11-12T00:00:00",
+                "startsAtInstant": "2026-11-11T16:00:00.000Z",
+                "winnerCondition": "score"
+              },
+              {
+                "abilityOverrides": {
+                  "allow": [],
+                  "defaultAllowed": null,
+                  "deny": []
+                },
+                "effects": [
+                  {
+                    "kind": "scoring",
+                    "label": "climb-handicap",
+                    "multiplier": 0.5
+                  },
+                  {
+                    "allow": [],
+                    "deny": [
+                      "blink"
+                    ],
+                    "kind": "ability",
+                    "label": "no-blink"
+                  }
+                ],
+                "endsAt": "2026-11-14T00:00:00",
+                "endsAtInstant": "2026-11-13T16:00:00.000Z",
+                "id": "climber",
+                "mapPoolId": "climber",
+                "meta": {
+                  "name": "Climber Series"
+                },
+                "requiresAbilities": [],
+                "startsAt": "2026-11-13T00:00:00",
+                "startsAtInstant": "2026-11-12T16:00:00.000Z",
+                "winnerCondition": "score"
+              }
+            ]
+          },
+          "schemaVersion": 2,
+          "scoring": {
+            "base": 10,
+            "categories": [
+              "sprint"
+            ],
+            "perMapBonus": {
+              "frost-cavern": 2
+            }
+          },
+          "timeZone": "Asia/Shanghai"
+        },
+        "summary": {
+          "catalogDigest": "sha256:4d00d1b33d3205145d3beade931c000acf2f603311329f0ff00488e1445b271c",
+          "catalogDigestShort": "4d00d1b3",
+          "content": {
+            "abilities": [
+              "blink",
+              "drone",
+              "shield"
+            ],
+            "mapPools": [
+              "climber",
+              "ranked",
+              "sprint"
+            ],
+            "maps": [
+              "frost-cavern",
+              "highland-pass",
+              "neon-docks"
+            ],
+            "rounds": [
+              {
+                "effects": [
+                  {
+                    "kind": "scoring",
+                    "label": "sprint-bonus",
+                    "multiplier": 1.5
+                  }
+                ],
+                "endsAt": "2026-11-13T00:00:00",
+                "endsAtInstant": "2026-11-12T16:00:00.000Z",
+                "id": "sprint",
+                "mapPoolId": "sprint",
+                "startsAt": "2026-11-12T00:00:00",
+                "startsAtInstant": "2026-11-11T16:00:00.000Z",
+                "winnerCondition": "score"
+              },
+              {
+                "effects": [
+                  {
+                    "kind": "scoring",
+                    "label": "climb-handicap",
+                    "multiplier": 0.5
+                  },
+                  {
+                    "allow": [],
+                    "deny": [
+                      "blink"
+                    ],
+                    "kind": "ability",
+                    "label": "no-blink"
+                  }
+                ],
+                "endsAt": "2026-11-14T00:00:00",
+                "endsAtInstant": "2026-11-13T16:00:00.000Z",
+                "id": "climber",
+                "mapPoolId": "climber",
+                "startsAt": "2026-11-13T00:00:00",
+                "startsAtInstant": "2026-11-12T16:00:00.000Z",
+                "winnerCondition": "score"
+              }
+            ],
+            "tags": [
+              "climber",
+              "defense",
+              "mobility",
+              "outdoor",
+              "sprint",
+              "urban",
+              "utility",
+              "winter"
+            ]
+          },
+          "digest": "sha256:2c094f8d5dbbf8b0e3eab88b95a983f3b81be83fcaecda7fa66842ecef8936c2",
+          "digestShort": "2c094f8d",
+          "displayName": "Autumn Season — baseline",
+          "notes": "v1 baseline: 10/base, 1.5x sprint, 0.5x climber",
+          "packageId": "season-26-autumn",
+          "publishedAt": "2026-11-10T00:00:00.000Z",
+          "summaryInputs": {
+            "abilities": "sha256:c944bb9b8b0f5b3330187efaa6638e0ff4bdeda9b8aeea78fd4944dafbd9a758",
+            "catalogDigest": "sha256:4d00d1b33d3205145d3beade931c000acf2f603311329f0ff00488e1445b271c",
+            "composition": "sha256:eaa99c4baf303bd04d9236320256f83b2068d443d4745c671fd2fdf22f195e73",
+            "defaults": "sha256:9861a3bfd590dad5e1b88afe8ab53bd4039e882f72cc9c4e8a13a9202ed4edbf",
+            "mapPool": "sha256:4e3c6135a07d21fee1b6d1f46252878ba41877dd982e5bfa6a2e61c712472b00",
+            "schedule": "sha256:8a791bdac2be5dc3123de5c8b5fc22748429ac5a3af4b5daf473b95e79fb9b1e",
+            "scoring": "sha256:901ba54d1f4fde5febfa3d8bb3c68dc3c1a97b593e71d2b575c3e2dc220a8028"
+          },
+          "timeZone": "Asia/Shanghai"
+        },
+        "version": 1
+      },
+      "previousVersion": null,
+      "rolledForwardFrom": null,
+      "status": "selected",
+      "version": 1
+    },
+    "before": {
+      "earliest": "2026-11-11T16:00:00.000Z",
+      "instant": 1794412799000,
+      "instantLocal": "2026-11-11T23:59:59+08:00",
+      "reason": "NO_PACKAGE_BEFORE_INSTANT",
+      "status": "none",
+      "versions": [
+        1
+      ]
+    },
+    "utcEdge": {
+      "digest": "sha256:2c094f8d5dbbf8b0e3eab88b95a983f3b81be83fcaecda7fa66842ecef8936c2",
+      "entry": {
+        "catalog": {
+          "abilities": {
+            "blink": {
+              "contentId": "blink",
+              "name": "Blink",
+              "revision": 2,
+              "tags": [
+                "mobility"
+              ]
+            },
+            "drone": {
+              "contentId": "drone",
+              "name": "Recon Drone",
+              "revision": 2,
+              "tags": [
+                "utility"
+              ]
+            },
+            "shield": {
+              "contentId": "shield",
+              "name": "Shield Projector",
+              "revision": 1,
+              "tags": [
+                "defense"
+              ]
+            }
+          },
+          "format": "season-content",
+          "maps": {
+            "frost-cavern": {
+              "contentId": "frost-cavern",
+              "name": "Frost Cavern",
+              "revision": 1,
+              "tags": [
+                "outdoor",
+                "climber",
+                "winter"
+              ]
+            },
+            "highland-pass": {
+              "contentId": "highland-pass",
+              "name": "Highland Pass",
+              "revision": 2,
+              "tags": [
+                "outdoor",
+                "climber"
+              ]
+            },
+            "neon-docks": {
+              "contentId": "neon-docks",
+              "name": "Neon Docks",
+              "revision": 3,
+              "tags": [
+                "urban",
+                "sprint"
+              ]
+            }
+          },
+          "schemaVersion": 1
+        },
+        "catalogDigest": "sha256:4d00d1b33d3205145d3beade931c000acf2f603311329f0ff00488e1445b271c",
+        "diagnostics": {
+          "summaryInputs": {
+            "abilities": "sha256:c944bb9b8b0f5b3330187efaa6638e0ff4bdeda9b8aeea78fd4944dafbd9a758",
+            "catalogDigest": "sha256:4d00d1b33d3205145d3beade931c000acf2f603311329f0ff00488e1445b271c",
+            "composition": "sha256:eaa99c4baf303bd04d9236320256f83b2068d443d4745c671fd2fdf22f195e73",
+            "defaults": "sha256:9861a3bfd590dad5e1b88afe8ab53bd4039e882f72cc9c4e8a13a9202ed4edbf",
+            "mapPool": "sha256:4e3c6135a07d21fee1b6d1f46252878ba41877dd982e5bfa6a2e61c712472b00",
+            "schedule": "sha256:8a791bdac2be5dc3123de5c8b5fc22748429ac5a3af4b5daf473b95e79fb9b1e",
+            "scoring": "sha256:901ba54d1f4fde5febfa3d8bb3c68dc3c1a97b593e71d2b575c3e2dc220a8028"
+          },
+          "warnings": []
+        },
+        "digest": "sha256:2c094f8d5dbbf8b0e3eab88b95a983f3b81be83fcaecda7fa66842ecef8936c2",
+        "displayName": "Autumn Season — baseline",
+        "effectiveFrom": "2026-11-11T16:00:00.000Z",
+        "effectiveFromLocal": "2026-11-12T00:00:00+08:00",
+        "materializedInputs": {
+          "abilities": {
+            "allow": [],
+            "defaultAllowed": true,
+            "deny": []
+          },
+          "composition": {
+            "allowTies": false,
+            "combine": "exclusive",
+            "exclusions": [],
+            "precedence": "newest",
+            "priority": []
+          },
+          "defaults": {
+            "mapPoolId": "ranked"
+          },
+          "displayName": "Autumn Season — baseline",
+          "id": "season-26-autumn",
+          "mapPool": {
+            "climber": {
+              "defaultMap": "highland-pass",
+              "maps": [
+                "highland-pass",
+                "frost-cavern"
+              ]
+            },
+            "ranked": {
+              "defaultMap": "neon-docks",
+              "maps": [
+                "neon-docks",
+                "highland-pass",
+                "frost-cavern"
+              ]
+            },
+            "sprint": {
+              "defaultMap": "neon-docks",
+              "maps": [
+                "neon-docks",
+                "highland-pass"
+              ]
+            }
+          },
+          "notes": "v1 baseline: 10/base, 1.5x sprint, 0.5x climber",
+          "options": {
+            "basePoints": 10,
+            "climberMultiplier": 0.5,
+            "sprintMultiplier": 1.5
+          },
+          "publishedAt": "2026-11-10T00:00:00.000Z",
+          "schedule": {
+            "rounds": [
+              {
+                "effects": [
+                  {
+                    "kind": "scoring",
+                    "label": "sprint-bonus",
+                    "multiplier": 1.5
+                  }
+                ],
+                "endsAt": "2026-11-13T00:00:00",
+                "id": "sprint",
+                "mapPoolId": "sprint",
+                "name": "Sprint Weekend",
+                "requiresAbilities": [
+                  "blink"
+                ],
+                "startsAt": "2026-11-12T00:00:00",
+                "winnerCondition": "score"
+              },
+              {
+                "effects": [
+                  {
+                    "kind": "scoring",
+                    "label": "climb-handicap",
+                    "multiplier": 0.5
+                  },
+                  {
+                    "allow": [],
+                    "deny": [
+                      "blink"
+                    ],
+                    "kind": "ability",
+                    "label": "no-blink"
+                  }
+                ],
+                "endsAt": "2026-11-14T00:00:00",
+                "id": "climber",
+                "mapPoolId": "climber",
+                "name": "Climber Series",
+                "startsAt": "2026-11-13T00:00:00",
+                "winnerCondition": "score"
+              }
+            ]
+          },
+          "scoring": {
+            "base": 10,
+            "categories": [
+              "sprint"
+            ],
+            "perMapBonus": {
+              "frost-cavern": 2
+            }
+          },
+          "timeZone": "Asia/Shanghai"
+        },
+        "options": {
+          "basePoints": 10,
+          "climberMultiplier": 0.5,
+          "sprintMultiplier": 1.5
+        },
+        "pkg": {
+          "abilities": {
+            "allow": [],
+            "defaultAllowed": true,
+            "deny": []
+          },
+          "catalogDigest": "sha256:4d00d1b33d3205145d3beade931c000acf2f603311329f0ff00488e1445b271c",
+          "composition": {
+            "allowTies": false,
+            "combine": "exclusive",
+            "exclusions": [],
+            "precedence": "newest",
+            "priority": []
+          },
+          "defaults": {
+            "mapPoolId": "ranked"
+          },
+          "format": "season-rule-package",
+          "id": "season-26-autumn",
+          "identity": {
+            "algorithm": "sha256",
+            "digest": "sha256:2c094f8d5dbbf8b0e3eab88b95a983f3b81be83fcaecda7fa66842ecef8936c2",
+            "scope": "package-core"
+          },
+          "mapPool": {
+            "climber": {
+              "defaultMap": "highland-pass",
+              "maps": [
+                "frost-cavern",
+                "highland-pass"
+              ]
+            },
+            "ranked": {
+              "defaultMap": "neon-docks",
+              "maps": [
+                "frost-cavern",
+                "highland-pass",
+                "neon-docks"
+              ]
+            },
+            "sprint": {
+              "defaultMap": "neon-docks",
+              "maps": [
+                "highland-pass",
+                "neon-docks"
+              ]
+            }
+          },
+          "publishedAt": "2026-11-10T00:00:00.000Z",
+          "schedule": {
+            "rounds": [
+              {
+                "abilityOverrides": {
+                  "allow": [],
+                  "defaultAllowed": null,
+                  "deny": []
+                },
+                "effects": [
+                  {
+                    "kind": "scoring",
+                    "label": "sprint-bonus",
+                    "multiplier": 1.5
+                  }
+                ],
+                "endsAt": "2026-11-13T00:00:00",
+                "endsAtInstant": "2026-11-12T16:00:00.000Z",
+                "id": "sprint",
+                "mapPoolId": "sprint",
+                "meta": {
+                  "name": "Sprint Weekend"
+                },
+                "requiresAbilities": [
+                  "blink"
+                ],
+                "startsAt": "2026-11-12T00:00:00",
+                "startsAtInstant": "2026-11-11T16:00:00.000Z",
+                "winnerCondition": "score"
+              },
+              {
+                "abilityOverrides": {
+                  "allow": [],
+                  "defaultAllowed": null,
+                  "deny": []
+                },
+                "effects": [
+                  {
+                    "kind": "scoring",
+                    "label": "climb-handicap",
+                    "multiplier": 0.5
+                  },
+                  {
+                    "allow": [],
+                    "deny": [
+                      "blink"
+                    ],
+                    "kind": "ability",
+                    "label": "no-blink"
+                  }
+                ],
+                "endsAt": "2026-11-14T00:00:00",
+                "endsAtInstant": "2026-11-13T16:00:00.000Z",
+                "id": "climber",
+                "mapPoolId": "climber",
+                "meta": {
+                  "name": "Climber Series"
+                },
+                "requiresAbilities": [],
+                "startsAt": "2026-11-13T00:00:00",
+                "startsAtInstant": "2026-11-12T16:00:00.000Z",
+                "winnerCondition": "score"
+              }
+            ]
+          },
+          "schemaVersion": 2,
+          "scoring": {
+            "base": 10,
+            "categories": [
+              "sprint"
+            ],
+            "perMapBonus": {
+              "frost-cavern": 2
+            }
+          },
+          "timeZone": "Asia/Shanghai"
+        },
+        "summary": {
+          "catalogDigest": "sha256:4d00d1b33d3205145d3beade931c000acf2f603311329f0ff00488e1445b271c",
+          "catalogDigestShort": "4d00d1b3",
+          "content": {
+            "abilities": [
+              "blink",
+              "drone",
+              "shield"
+            ],
+            "mapPools": [
+              "climber",
+              "ranked",
+              "sprint"
+            ],
+            "maps": [
+              "frost-cavern",
+              "highland-pass",
+              "neon-docks"
+            ],
+            "rounds": [
+              {
+                "effects": [
+                  {
+                    "kind": "scoring",
+                    "label": "sprint-bonus",
+                    "multiplier": 1.5
+                  }
+                ],
+                "endsAt": "2026-11-13T00:00:00",
+                "endsAtInstant": "2026-11-12T16:00:00.000Z",
+                "id": "sprint",
+                "mapPoolId": "sprint",
+                "startsAt": "2026-11-12T00:00:00",
+                "startsAtInstant": "2026-11-11T16:00:00.000Z",
+                "winnerCondition": "score"
+              },
+              {
+                "effects": [
+                  {
+                    "kind": "scoring",
+                    "label": "climb-handicap",
+                    "multiplier": 0.5
+                  },
+                  {
+                    "allow": [],
+                    "deny": [
+                      "blink"
+                    ],
+                    "kind": "ability",
+                    "label": "no-blink"
+                  }
+                ],
+                "endsAt": "2026-11-14T00:00:00",
+                "endsAtInstant": "2026-11-13T16:00:00.000Z",
+                "id": "climber",
+                "mapPoolId": "climber",
+                "startsAt": "2026-11-13T00:00:00",
+                "startsAtInstant": "2026-11-12T16:00:00.000Z",
+                "winnerCondition": "score"
+              }
+            ],
+            "tags": [
+              "climber",
+              "defense",
+              "mobility",
+              "outdoor",
+              "sprint",
+              "urban",
+              "utility",
+              "winter"
+            ]
+          },
+          "digest": "sha256:2c094f8d5dbbf8b0e3eab88b95a983f3b81be83fcaecda7fa66842ecef8936c2",
+          "digestShort": "2c094f8d",
+          "displayName": "Autumn Season — baseline",
+          "notes": "v1 baseline: 10/base, 1.5x sprint, 0.5x climber",
+          "packageId": "season-26-autumn",
+          "publishedAt": "2026-11-10T00:00:00.000Z",
+          "summaryInputs": {
+            "abilities": "sha256:c944bb9b8b0f5b3330187efaa6638e0ff4bdeda9b8aeea78fd4944dafbd9a758",
+            "catalogDigest": "sha256:4d00d1b33d3205145d3beade931c000acf2f603311329f0ff00488e1445b271c",
+            "composition": "sha256:eaa99c4baf303bd04d9236320256f83b2068d443d4745c671fd2fdf22f195e73",
+            "defaults": "sha256:9861a3bfd590dad5e1b88afe8ab53bd4039e882f72cc9c4e8a13a9202ed4edbf",
+            "mapPool": "sha256:4e3c6135a07d21fee1b6d1f46252878ba41877dd982e5bfa6a2e61c712472b00",
+            "schedule": "sha256:8a791bdac2be5dc3123de5c8b5fc22748429ac5a3af4b5daf473b95e79fb9b1e",
+            "scoring": "sha256:901ba54d1f4fde5febfa3d8bb3c68dc3c1a97b593e71d2b575c3e2dc220a8028"
+          },
+          "timeZone": "Asia/Shanghai"
+        },
+        "version": 1
+      },
+      "instant": 1794412800000,
+      "pinnedEntry": {
+        "catalog": {
+          "abilities": {
+            "blink": {
+              "contentId": "blink",
+              "name": "Blink",
+              "revision": 2,
+              "tags": [
+                "mobility"
+              ]
+            },
+            "drone": {
+              "contentId": "drone",
+              "name": "Recon Drone",
+              "revision": 2,
+              "tags": [
+                "utility"
+              ]
+            },
+            "shield": {
+              "contentId": "shield",
+              "name": "Shield Projector",
+              "revision": 1,
+              "tags": [
+                "defense"
+              ]
+            }
+          },
+          "format": "season-content",
+          "maps": {
+            "frost-cavern": {
+              "contentId": "frost-cavern",
+              "name": "Frost Cavern",
+              "revision": 1,
+              "tags": [
+                "outdoor",
+                "climber",
+                "winter"
+              ]
+            },
+            "highland-pass": {
+              "contentId": "highland-pass",
+              "name": "Highland Pass",
+              "revision": 2,
+              "tags": [
+                "outdoor",
+                "climber"
+              ]
+            },
+            "neon-docks": {
+              "contentId": "neon-docks",
+              "name": "Neon Docks",
+              "revision": 3,
+              "tags": [
+                "urban",
+                "sprint"
+              ]
+            }
+          },
+          "schemaVersion": 1
+        },
+        "catalogDigest": "sha256:4d00d1b33d3205145d3beade931c000acf2f603311329f0ff00488e1445b271c",
+        "diagnostics": {
+          "summaryInputs": {
+            "abilities": "sha256:c944bb9b8b0f5b3330187efaa6638e0ff4bdeda9b8aeea78fd4944dafbd9a758",
+            "catalogDigest": "sha256:4d00d1b33d3205145d3beade931c000acf2f603311329f0ff00488e1445b271c",
+            "composition": "sha256:eaa99c4baf303bd04d9236320256f83b2068d443d4745c671fd2fdf22f195e73",
+            "defaults": "sha256:9861a3bfd590dad5e1b88afe8ab53bd4039e882f72cc9c4e8a13a9202ed4edbf",
+            "mapPool": "sha256:4e3c6135a07d21fee1b6d1f46252878ba41877dd982e5bfa6a2e61c712472b00",
+            "schedule": "sha256:8a791bdac2be5dc3123de5c8b5fc22748429ac5a3af4b5daf473b95e79fb9b1e",
+            "scoring": "sha256:901ba54d1f4fde5febfa3d8bb3c68dc3c1a97b593e71d2b575c3e2dc220a8028"
+          },
+          "warnings": []
+        },
+        "digest": "sha256:2c094f8d5dbbf8b0e3eab88b95a983f3b81be83fcaecda7fa66842ecef8936c2",
+        "displayName": "Autumn Season — baseline",
+        "effectiveFrom": "2026-11-11T16:00:00.000Z",
+        "effectiveFromLocal": "2026-11-12T00:00:00+08:00",
+        "materializedInputs": {
+          "abilities": {
+            "allow": [],
+            "defaultAllowed": true,
+            "deny": []
+          },
+          "composition": {
+            "allowTies": false,
+            "combine": "exclusive",
+            "exclusions": [],
+            "precedence": "newest",
+            "priority": []
+          },
+          "defaults": {
+            "mapPoolId": "ranked"
+          },
+          "displayName": "Autumn Season — baseline",
+          "id": "season-26-autumn",
+          "mapPool": {
+            "climber": {
+              "defaultMap": "highland-pass",
+              "maps": [
+                "highland-pass",
+                "frost-cavern"
+              ]
+            },
+            "ranked": {
+              "defaultMap": "neon-docks",
+              "maps": [
+                "neon-docks",
+                "highland-pass",
+                "frost-cavern"
+              ]
+            },
+            "sprint": {
+              "defaultMap": "neon-docks",
+              "maps": [
+                "neon-docks",
+                "highland-pass"
+              ]
+            }
+          },
+          "notes": "v1 baseline: 10/base, 1.5x sprint, 0.5x climber",
+          "options": {
+            "basePoints": 10,
+            "climberMultiplier": 0.5,
+            "sprintMultiplier": 1.5
+          },
+          "publishedAt": "2026-11-10T00:00:00.000Z",
+          "schedule": {
+            "rounds": [
+              {
+                "effects": [
+                  {
+                    "kind": "scoring",
+                    "label": "sprint-bonus",
+                    "multiplier": 1.5
+                  }
+                ],
+                "endsAt": "2026-11-13T00:00:00",
+                "id": "sprint",
+                "mapPoolId": "sprint",
+                "name": "Sprint Weekend",
+                "requiresAbilities": [
+                  "blink"
+                ],
+                "startsAt": "2026-11-12T00:00:00",
+                "winnerCondition": "score"
+              },
+              {
+                "effects": [
+                  {
+                    "kind": "scoring",
+                    "label": "climb-handicap",
+                    "multiplier": 0.5
+                  },
+                  {
+                    "allow": [],
+                    "deny": [
+                      "blink"
+                    ],
+                    "kind": "ability",
+                    "label": "no-blink"
+                  }
+                ],
+                "endsAt": "2026-11-14T00:00:00",
+                "id": "climber",
+                "mapPoolId": "climber",
+                "name": "Climber Series",
+                "startsAt": "2026-11-13T00:00:00",
+                "winnerCondition": "score"
+              }
+            ]
+          },
+          "scoring": {
+            "base": 10,
+            "categories": [
+              "sprint"
+            ],
+            "perMapBonus": {
+              "frost-cavern": 2
+            }
+          },
+          "timeZone": "Asia/Shanghai"
+        },
+        "options": {
+          "basePoints": 10,
+          "climberMultiplier": 0.5,
+          "sprintMultiplier": 1.5
+        },
+        "pkg": {
+          "abilities": {
+            "allow": [],
+            "defaultAllowed": true,
+            "deny": []
+          },
+          "catalogDigest": "sha256:4d00d1b33d3205145d3beade931c000acf2f603311329f0ff00488e1445b271c",
+          "composition": {
+            "allowTies": false,
+            "combine": "exclusive",
+            "exclusions": [],
+            "precedence": "newest",
+            "priority": []
+          },
+          "defaults": {
+            "mapPoolId": "ranked"
+          },
+          "format": "season-rule-package",
+          "id": "season-26-autumn",
+          "identity": {
+            "algorithm": "sha256",
+            "digest": "sha256:2c094f8d5dbbf8b0e3eab88b95a983f3b81be83fcaecda7fa66842ecef8936c2",
+            "scope": "package-core"
+          },
+          "mapPool": {
+            "climber": {
+              "defaultMap": "highland-pass",
+              "maps": [
+                "frost-cavern",
+                "highland-pass"
+              ]
+            },
+            "ranked": {
+              "defaultMap": "neon-docks",
+              "maps": [
+                "frost-cavern",
+                "highland-pass",
+                "neon-docks"
+              ]
+            },
+            "sprint": {
+              "defaultMap": "neon-docks",
+              "maps": [
+                "highland-pass",
+                "neon-docks"
+              ]
+            }
+          },
+          "publishedAt": "2026-11-10T00:00:00.000Z",
+          "schedule": {
+            "rounds": [
+              {
+                "abilityOverrides": {
+                  "allow": [],
+                  "defaultAllowed": null,
+                  "deny": []
+                },
+                "effects": [
+                  {
+                    "kind": "scoring",
+                    "label": "sprint-bonus",
+                    "multiplier": 1.5
+                  }
+                ],
+                "endsAt": "2026-11-13T00:00:00",
+                "endsAtInstant": "2026-11-12T16:00:00.000Z",
+                "id": "sprint",
+                "mapPoolId": "sprint",
+                "meta": {
+                  "name": "Sprint Weekend"
+                },
+                "requiresAbilities": [
+                  "blink"
+                ],
+                "startsAt": "2026-11-12T00:00:00",
+                "startsAtInstant": "2026-11-11T16:00:00.000Z",
+                "winnerCondition": "score"
+              },
+              {
+                "abilityOverrides": {
+                  "allow": [],
+                  "defaultAllowed": null,
+                  "deny": []
+                },
+                "effects": [
+                  {
+                    "kind": "scoring",
+                    "label": "climb-handicap",
+                    "multiplier": 0.5
+                  },
+                  {
+                    "allow": [],
+                    "deny": [
+                      "blink"
+                    ],
+                    "kind": "ability",
+                    "label": "no-blink"
+                  }
+                ],
+                "endsAt": "2026-11-14T00:00:00",
+                "endsAtInstant": "2026-11-13T16:00:00.000Z",
+                "id": "climber",
+                "mapPoolId": "climber",
+                "meta": {
+                  "name": "Climber Series"
+                },
+                "requiresAbilities": [],
+                "startsAt": "2026-11-13T00:00:00",
+                "startsAtInstant": "2026-11-12T16:00:00.000Z",
+                "winnerCondition": "score"
+              }
+            ]
+          },
+          "schemaVersion": 2,
+          "scoring": {
+            "base": 10,
+            "categories": [
+              "sprint"
+            ],
+            "perMapBonus": {
+              "frost-cavern": 2
+            }
+          },
+          "timeZone": "Asia/Shanghai"
+        },
+        "summary": {
+          "catalogDigest": "sha256:4d00d1b33d3205145d3beade931c000acf2f603311329f0ff00488e1445b271c",
+          "catalogDigestShort": "4d00d1b3",
+          "content": {
+            "abilities": [
+              "blink",
+              "drone",
+              "shield"
+            ],
+            "mapPools": [
+              "climber",
+              "ranked",
+              "sprint"
+            ],
+            "maps": [
+              "frost-cavern",
+              "highland-pass",
+              "neon-docks"
+            ],
+            "rounds": [
+              {
+                "effects": [
+                  {
+                    "kind": "scoring",
+                    "label": "sprint-bonus",
+                    "multiplier": 1.5
+                  }
+                ],
+                "endsAt": "2026-11-13T00:00:00",
+                "endsAtInstant": "2026-11-12T16:00:00.000Z",
+                "id": "sprint",
+                "mapPoolId": "sprint",
+                "startsAt": "2026-11-12T00:00:00",
+                "startsAtInstant": "2026-11-11T16:00:00.000Z",
+                "winnerCondition": "score"
+              },
+              {
+                "effects": [
+                  {
+                    "kind": "scoring",
+                    "label": "climb-handicap",
+                    "multiplier": 0.5
+                  },
+                  {
+                    "allow": [],
+                    "deny": [
+                      "blink"
+                    ],
+                    "kind": "ability",
+                    "label": "no-blink"
+                  }
+                ],
+                "endsAt": "2026-11-14T00:00:00",
+                "endsAtInstant": "2026-11-13T16:00:00.000Z",
+                "id": "climber",
+                "mapPoolId": "climber",
+                "startsAt": "2026-11-13T00:00:00",
+                "startsAtInstant": "2026-11-12T16:00:00.000Z",
+                "winnerCondition": "score"
+              }
+            ],
+            "tags": [
+              "climber",
+              "defense",
+              "mobility",
+              "outdoor",
+              "sprint",
+              "urban",
+              "utility",
+              "winter"
+            ]
+          },
+          "digest": "sha256:2c094f8d5dbbf8b0e3eab88b95a983f3b81be83fcaecda7fa66842ecef8936c2",
+          "digestShort": "2c094f8d",
+          "displayName": "Autumn Season — baseline",
+          "notes": "v1 baseline: 10/base, 1.5x sprint, 0.5x climber",
+          "packageId": "season-26-autumn",
+          "publishedAt": "2026-11-10T00:00:00.000Z",
+          "summaryInputs": {
+            "abilities": "sha256:c944bb9b8b0f5b3330187efaa6638e0ff4bdeda9b8aeea78fd4944dafbd9a758",
+            "catalogDigest": "sha256:4d00d1b33d3205145d3beade931c000acf2f603311329f0ff00488e1445b271c",
+            "composition": "sha256:eaa99c4baf303bd04d9236320256f83b2068d443d4745c671fd2fdf22f195e73",
+            "defaults": "sha256:9861a3bfd590dad5e1b88afe8ab53bd4039e882f72cc9c4e8a13a9202ed4edbf",
+            "mapPool": "sha256:4e3c6135a07d21fee1b6d1f46252878ba41877dd982e5bfa6a2e61c712472b00",
+            "schedule": "sha256:8a791bdac2be5dc3123de5c8b5fc22748429ac5a3af4b5daf473b95e79fb9b1e",
+            "scoring": "sha256:901ba54d1f4fde5febfa3d8bb3c68dc3c1a97b593e71d2b575c3e2dc220a8028"
+          },
+          "timeZone": "Asia/Shanghai"
+        },
+        "version": 1
+      },
+      "previousVersion": null,
+      "rolledForwardFrom": null,
+      "status": "selected",
+      "version": 1
+    }
+  },
+  "standaloneAssemble": {
+    "digest": "sha256:2c094f8d5dbbf8b0e3eab88b95a983f3b81be83fcaecda7fa66842ecef8936c2",
+    "status": "assembled",
+    "summaryInputs": {
+      "abilities": "sha256:c944bb9b8b0f5b3330187efaa6638e0ff4bdeda9b8aeea78fd4944dafbd9a758",
+      "catalogDigest": "sha256:4d00d1b33d3205145d3beade931c000acf2f603311329f0ff00488e1445b271c",
+      "composition": "sha256:eaa99c4baf303bd04d9236320256f83b2068d443d4745c671fd2fdf22f195e73",
+      "defaults": "sha256:9861a3bfd590dad5e1b88afe8ab53bd4039e882f72cc9c4e8a13a9202ed4edbf",
+      "mapPool": "sha256:4e3c6135a07d21fee1b6d1f46252878ba41877dd982e5bfa6a2e61c712472b00",
+      "schedule": "sha256:8a791bdac2be5dc3123de5c8b5fc22748429ac5a3af4b5daf473b95e79fb9b1e",
+      "scoring": "sha256:901ba54d1f4fde5febfa3d8bb3c68dc3c1a97b593e71d2b575c3e2dc220a8028"
+    },
+    "warnings": []
+  },
+  "stateAt": {
+    "at": 1794571200000,
+    "atLocal": "2026-11-13T20:00:00+08:00",
+    "currentVersion": 3,
+    "matches": [
+      {
+        "matchId": "alpha",
+        "round": "sprint",
+        "scores": {
+          "a": 15,
+          "b": 15
+        },
+        "version": 1
+      },
+      {
+        "matchId": "beta",
+        "round": "climber",
+        "scores": {
+          "a": 8,
+          "b": 8
+        },
+        "version": 2
+      }
+    ],
+    "selectedDigest": "sha256:335653475c520b91bd3573cefc6b9f50a1292f1e838c7f3aa1a6c34ea246ea49",
+    "selectedVersion": 2,
+    "selectionReason": null
+  },
+  "summaries": {
+    "compare": {
+      "a": {
+        "catalogDigest": "sha256:4d00d1b33d3205145d3beade931c000acf2f603311329f0ff00488e1445b271c",
+        "catalogDigestShort": "4d00d1b3",
+        "digest": "sha256:2c094f8d5dbbf8b0e3eab88b95a983f3b81be83fcaecda7fa66842ecef8936c2",
+        "digestShort": "2c094f8d",
+        "displayName": "Autumn Season — baseline",
+        "effectiveFrom": "2026-11-11T16:00:00.000Z",
+        "effectiveFromLocal": "2026-11-12T00:00:00+08:00",
+        "inputDigests": {
+          "abilities": "sha256:c944bb9b8b0f5b3330187efaa6638e0ff4bdeda9b8aeea78fd4944dafbd9a758",
+          "catalogDigest": "sha256:4d00d1b33d3205145d3beade931c000acf2f603311329f0ff00488e1445b271c",
+          "composition": "sha256:eaa99c4baf303bd04d9236320256f83b2068d443d4745c671fd2fdf22f195e73",
+          "defaults": "sha256:9861a3bfd590dad5e1b88afe8ab53bd4039e882f72cc9c4e8a13a9202ed4edbf",
+          "mapPool": "sha256:4e3c6135a07d21fee1b6d1f46252878ba41877dd982e5bfa6a2e61c712472b00",
+          "schedule": "sha256:8a791bdac2be5dc3123de5c8b5fc22748429ac5a3af4b5daf473b95e79fb9b1e",
+          "scoring": "sha256:901ba54d1f4fde5febfa3d8bb3c68dc3c1a97b593e71d2b575c3e2dc220a8028"
+        },
+        "inputFingerprint": "sha256:8a791bdac2be5dc3123de5c8b5fc22748429ac5a3af4b5daf473b95e79fb9b1e|sha256:9861a3bfd590dad5e1b88afe8ab53bd4039e882f72cc9c4e8a13a9202ed4edbf|sha256:4e3c6135a07d21fee1b6d1f46252878ba41877dd982e5bfa6a2e61c712472b00|sha256:901ba54d1f4fde5febfa3d8bb3c68dc3c1a97b593e71d2b575c3e2dc220a8028|sha256:c944bb9b8b0f5b3330187efaa6638e0ff4bdeda9b8aeea78fd4944dafbd9a758|sha256:eaa99c4baf303bd04d9236320256f83b2068d443d4745c671fd2fdf22f195e73|sha256:4d00d1b33d3205145d3beade931c000acf2f603311329f0ff00488e1445b271c",
+        "integrityOk": true,
+        "packageId": "season-26-autumn",
+        "publishedAt": "2026-11-10T00:00:00.000Z",
+        "rounds": [
+          {
+            "id": "sprint",
+            "local": {
+              "end": "2026-11-13T00:00:00+08:00",
+              "start": "2026-11-12T00:00:00+08:00"
+            }
+          },
+          {
+            "id": "climber",
+            "local": {
+              "end": "2026-11-14T00:00:00+08:00",
+              "start": "2026-11-13T00:00:00+08:00"
+            }
+          }
+        ],
+        "timeZone": "Asia/Shanghai",
+        "version": 1
+      },
+      "b": {
+        "catalogDigest": "sha256:4d00d1b33d3205145d3beade931c000acf2f603311329f0ff00488e1445b271c",
+        "catalogDigestShort": "4d00d1b3",
+        "digest": "sha256:335653475c520b91bd3573cefc6b9f50a1292f1e838c7f3aa1a6c34ea246ea49",
+        "digestShort": "33565347",
+        "displayName": "Autumn Season — v2 (same name family)",
+        "effectiveFrom": "2026-11-12T16:00:00.000Z",
+        "effectiveFromLocal": "2026-11-13T00:00:00+08:00",
+        "inputDigests": {
+          "abilities": "sha256:7a322f8a65aa1e0f60a7a6064aae47c73acd385c24d9c053a5e45ff8e53cea67",
+          "catalogDigest": "sha256:4d00d1b33d3205145d3beade931c000acf2f603311329f0ff00488e1445b271c",
+          "composition": "sha256:eaa99c4baf303bd04d9236320256f83b2068d443d4745c671fd2fdf22f195e73",
+          "defaults": "sha256:9861a3bfd590dad5e1b88afe8ab53bd4039e882f72cc9c4e8a13a9202ed4edbf",
+          "mapPool": "sha256:4e3c6135a07d21fee1b6d1f46252878ba41877dd982e5bfa6a2e61c712472b00",
+          "schedule": "sha256:c04d535295ccaacaee2339a9988b6dd1b18211c028f65b4d18eaf37bec577673",
+          "scoring": "sha256:901ba54d1f4fde5febfa3d8bb3c68dc3c1a97b593e71d2b575c3e2dc220a8028"
+        },
+        "inputFingerprint": "sha256:c04d535295ccaacaee2339a9988b6dd1b18211c028f65b4d18eaf37bec577673|sha256:9861a3bfd590dad5e1b88afe8ab53bd4039e882f72cc9c4e8a13a9202ed4edbf|sha256:4e3c6135a07d21fee1b6d1f46252878ba41877dd982e5bfa6a2e61c712472b00|sha256:901ba54d1f4fde5febfa3d8bb3c68dc3c1a97b593e71d2b575c3e2dc220a8028|sha256:7a322f8a65aa1e0f60a7a6064aae47c73acd385c24d9c053a5e45ff8e53cea67|sha256:eaa99c4baf303bd04d9236320256f83b2068d443d4745c671fd2fdf22f195e73|sha256:4d00d1b33d3205145d3beade931c000acf2f603311329f0ff00488e1445b271c",
+        "integrityOk": true,
+        "packageId": "season-26-autumn",
+        "publishedAt": "2026-11-12T04:00:00.000Z",
+        "rounds": [
+          {
+            "id": "sprint",
+            "local": {
+              "end": "2026-11-13T00:00:00+08:00",
+              "start": "2026-11-12T00:00:00+08:00"
+            }
+          },
+          {
+            "id": "climber",
+            "local": {
+              "end": "2026-11-14T00:00:00+08:00",
+              "start": "2026-11-13T00:00:00+08:00"
+            }
+          }
+        ],
+        "timeZone": "Asia/Shanghai",
+        "version": 2
+      },
+      "changedInputs": [
+        "abilities",
+        "schedule"
+      ],
+      "inputDiff": [
+        {
+          "from": "sha256:c944bb9b8b0f5b3330187efaa6638e0ff4bdeda9b8aeea78fd4944dafbd9a758",
+          "input": "abilities",
+          "to": "sha256:7a322f8a65aa1e0f60a7a6064aae47c73acd385c24d9c053a5e45ff8e53cea67"
+        },
+        {
+          "from": "sha256:8a791bdac2be5dc3123de5c8b5fc22748429ac5a3af4b5daf473b95e79fb9b1e",
+          "input": "schedule",
+          "to": "sha256:c04d535295ccaacaee2339a9988b6dd1b18211c028f65b4d18eaf37bec577673"
+        }
+      ],
+      "sameDigest": false,
+      "sameDisplayName": false,
+      "sameInputs": false
+    },
+    "v1": {
+      "catalogDigest": "sha256:4d00d1b33d3205145d3beade931c000acf2f603311329f0ff00488e1445b271c",
+      "catalogDigestShort": "4d00d1b3",
+      "digest": "sha256:2c094f8d5dbbf8b0e3eab88b95a983f3b81be83fcaecda7fa66842ecef8936c2",
+      "digestShort": "2c094f8d",
+      "displayName": "Autumn Season — baseline",
+      "effectiveFrom": "2026-11-11T16:00:00.000Z",
+      "effectiveFromLocal": "2026-11-12T00:00:00+08:00",
+      "inputDigests": {
+        "abilities": "sha256:c944bb9b8b0f5b3330187efaa6638e0ff4bdeda9b8aeea78fd4944dafbd9a758",
+        "catalogDigest": "sha256:4d00d1b33d3205145d3beade931c000acf2f603311329f0ff00488e1445b271c",
+        "composition": "sha256:eaa99c4baf303bd04d9236320256f83b2068d443d4745c671fd2fdf22f195e73",
+        "defaults": "sha256:9861a3bfd590dad5e1b88afe8ab53bd4039e882f72cc9c4e8a13a9202ed4edbf",
+        "mapPool": "sha256:4e3c6135a07d21fee1b6d1f46252878ba41877dd982e5bfa6a2e61c712472b00",
+        "schedule": "sha256:8a791bdac2be5dc3123de5c8b5fc22748429ac5a3af4b5daf473b95e79fb9b1e",
+        "scoring": "sha256:901ba54d1f4fde5febfa3d8bb3c68dc3c1a97b593e71d2b575c3e2dc220a8028"
+      },
+      "inputFingerprint": "sha256:8a791bdac2be5dc3123de5c8b5fc22748429ac5a3af4b5daf473b95e79fb9b1e|sha256:9861a3bfd590dad5e1b88afe8ab53bd4039e882f72cc9c4e8a13a9202ed4edbf|sha256:4e3c6135a07d21fee1b6d1f46252878ba41877dd982e5bfa6a2e61c712472b00|sha256:901ba54d1f4fde5febfa3d8bb3c68dc3c1a97b593e71d2b575c3e2dc220a8028|sha256:c944bb9b8b0f5b3330187efaa6638e0ff4bdeda9b8aeea78fd4944dafbd9a758|sha256:eaa99c4baf303bd04d9236320256f83b2068d443d4745c671fd2fdf22f195e73|sha256:4d00d1b33d3205145d3beade931c000acf2f603311329f0ff00488e1445b271c",
+      "integrityOk": true,
+      "packageId": "season-26-autumn",
+      "publishedAt": "2026-11-10T00:00:00.000Z",
+      "rounds": [
+        {
+          "id": "sprint",
+          "local": {
+            "end": "2026-11-13T00:00:00+08:00",
+            "start": "2026-11-12T00:00:00+08:00"
+          }
+        },
+        {
+          "id": "climber",
+          "local": {
+            "end": "2026-11-14T00:00:00+08:00",
+            "start": "2026-11-13T00:00:00+08:00"
+          }
+        }
+      ],
+      "timeZone": "Asia/Shanghai",
+      "version": 1
+    },
+    "v2": {
+      "catalogDigest": "sha256:4d00d1b33d3205145d3beade931c000acf2f603311329f0ff00488e1445b271c",
+      "catalogDigestShort": "4d00d1b3",
+      "digest": "sha256:335653475c520b91bd3573cefc6b9f50a1292f1e838c7f3aa1a6c34ea246ea49",
+      "digestShort": "33565347",
+      "displayName": "Autumn Season — v2 (same name family)",
+      "effectiveFrom": "2026-11-12T16:00:00.000Z",
+      "effectiveFromLocal": "2026-11-13T00:00:00+08:00",
+      "inputDigests": {
+        "abilities": "sha256:7a322f8a65aa1e0f60a7a6064aae47c73acd385c24d9c053a5e45ff8e53cea67",
+        "catalogDigest": "sha256:4d00d1b33d3205145d3beade931c000acf2f603311329f0ff00488e1445b271c",
+        "composition": "sha256:eaa99c4baf303bd04d9236320256f83b2068d443d4745c671fd2fdf22f195e73",
+        "defaults": "sha256:9861a3bfd590dad5e1b88afe8ab53bd4039e882f72cc9c4e8a13a9202ed4edbf",
+        "mapPool": "sha256:4e3c6135a07d21fee1b6d1f46252878ba41877dd982e5bfa6a2e61c712472b00",
+        "schedule": "sha256:c04d535295ccaacaee2339a9988b6dd1b18211c028f65b4d18eaf37bec577673",
+        "scoring": "sha256:901ba54d1f4fde5febfa3d8bb3c68dc3c1a97b593e71d2b575c3e2dc220a8028"
+      },
+      "inputFingerprint": "sha256:c04d535295ccaacaee2339a9988b6dd1b18211c028f65b4d18eaf37bec577673|sha256:9861a3bfd590dad5e1b88afe8ab53bd4039e882f72cc9c4e8a13a9202ed4edbf|sha256:4e3c6135a07d21fee1b6d1f46252878ba41877dd982e5bfa6a2e61c712472b00|sha256:901ba54d1f4fde5febfa3d8bb3c68dc3c1a97b593e71d2b575c3e2dc220a8028|sha256:7a322f8a65aa1e0f60a7a6064aae47c73acd385c24d9c053a5e45ff8e53cea67|sha256:eaa99c4baf303bd04d9236320256f83b2068d443d4745c671fd2fdf22f195e73|sha256:4d00d1b33d3205145d3beade931c000acf2f603311329f0ff00488e1445b271c",
+      "integrityOk": true,
+      "packageId": "season-26-autumn",
+      "publishedAt": "2026-11-12T04:00:00.000Z",
+      "rounds": [
+        {
+          "id": "sprint",
+          "local": {
+            "end": "2026-11-13T00:00:00+08:00",
+            "start": "2026-11-12T00:00:00+08:00"
+          }
+        },
+        {
+          "id": "climber",
+          "local": {
+            "end": "2026-11-14T00:00:00+08:00",
+            "start": "2026-11-13T00:00:00+08:00"
+          }
+        }
+      ],
+      "timeZone": "Asia/Shanghai",
+      "version": 2
+    }
+  },
+  "timeLayer": {
+    "ambiguous": {
+      "candidates": [
+        1793511000000,
+        1793514600000
+      ],
+      "civil": "2026-11-01T01:30:00",
+      "instant": 1793511000000,
+      "status": "ambiguous",
+      "timeZone": "America/New_York"
+    },
+    "crossDay": "2026-11-13T00:00:00+08:00",
+    "nonexistent": {
+      "candidates": [],
+      "civil": "2026-03-08T02:30:00",
+      "instant": null,
+      "status": "nonexistent",
+      "timeZone": "America/New_York"
+    }
+  },
+  "timeline": {
+    "boundaries": [
+      {
+        "at": 1794499200000,
+        "atLocal": "2026-11-13T00:00:00+08:00",
+        "digestShort": "33565347",
+        "displayName": "Autumn Season — v2 (same name family)",
+        "version": 2
+      }
+    ],
+    "changingRules": true,
+    "from": 1794477600000,
+    "fromLocal": "2026-11-12T18:00:00+08:00",
+    "matches": [
+      {
+        "createdAt": 1794484800000,
+        "createdAtLocal": "2026-11-12T20:00:00+08:00",
+        "frozenMultiplier": 1.5,
+        "frozenRound": "sprint",
+        "frozenRounds": [
+          "sprint"
+        ],
+        "matchId": "alpha",
+        "pinnedDigest": "sha256:2c094f8d5dbbf8b0e3eab88b95a983f3b81be83fcaecda7fa66842ecef8936c2",
+        "pinnedDigestShort": "2c094f8d",
+        "pinnedVersion": 1,
+        "samples": [
+          {
+            "at": 1794477600000,
+            "atLocal": "2026-11-12T18:00:00+08:00",
+            "blocked": null,
+            "frozenMultiplier": 1.5,
+            "frozenRound": "sprint",
+            "frozenRounds": [
+              "sprint"
+            ],
+            "packageWouldSelect": {
+              "multiplier": 1.5,
+              "rounds": [
+                "sprint"
+              ],
+              "winner": "sprint"
+            },
+            "pinnedVersion": 1
+          },
+          {
+            "at": 1794484800000,
+            "atLocal": "2026-11-12T20:00:00+08:00",
+            "blocked": null,
+            "frozenMultiplier": 1.5,
+            "frozenRound": "sprint",
+            "frozenRounds": [
+              "sprint"
+            ],
+            "packageWouldSelect": {
+              "multiplier": 1.5,
+              "rounds": [
+                "sprint"
+              ],
+              "winner": "sprint"
+            },
+            "pinnedVersion": 1
+          },
+          {
+            "at": 1794499200000,
+            "atLocal": "2026-11-13T00:00:00+08:00",
+            "blocked": null,
+            "frozenMultiplier": 1.5,
+            "frozenRound": "sprint",
+            "frozenRounds": [
+              "sprint"
+            ],
+            "packageWouldSelect": {
+              "multiplier": 0.5,
+              "rounds": [
+                "climber"
+              ],
+              "winner": "climber"
+            },
+            "pinnedVersion": 1
+          },
+          {
+            "at": 1794585600000,
+            "atLocal": "2026-11-14T00:00:00+08:00",
+            "blocked": null,
+            "frozenMultiplier": 1.5,
+            "frozenRound": "sprint",
+            "frozenRounds": [
+              "sprint"
+            ],
+            "packageWouldSelect": {
+              "multiplier": 1,
+              "rounds": [],
+              "winner": null
+            },
+            "pinnedVersion": 1
+          },
+          {
+            "at": 1794628800000,
+            "atLocal": "2026-11-14T12:00:00+08:00",
+            "blocked": null,
+            "frozenMultiplier": 1.5,
+            "frozenRound": "sprint",
+            "frozenRounds": [
+              "sprint"
+            ],
+            "packageWouldSelect": {
+              "multiplier": 1,
+              "rounds": [],
+              "winner": null
+            },
+            "pinnedVersion": 1
+          }
+        ],
+        "scores": {
+          "a": 15,
+          "b": 15
+        }
+      },
+      {
+        "createdAt": 1794531600000,
+        "createdAtLocal": "2026-11-13T09:00:00+08:00",
+        "frozenMultiplier": 0.8,
+        "frozenRound": "climber",
+        "frozenRounds": [
+          "climber"
+        ],
+        "matchId": "beta",
+        "pinnedDigest": "sha256:335653475c520b91bd3573cefc6b9f50a1292f1e838c7f3aa1a6c34ea246ea49",
+        "pinnedDigestShort": "33565347",
+        "pinnedVersion": 2,
+        "samples": [
+          {
+            "at": 1794477600000,
+            "atLocal": "2026-11-12T18:00:00+08:00",
+            "blocked": null,
+            "frozenMultiplier": 0.8,
+            "frozenRound": "climber",
+            "frozenRounds": [
+              "climber"
+            ],
+            "packageWouldSelect": {
+              "multiplier": 1.75,
+              "rounds": [
+                "sprint"
+              ],
+              "winner": "sprint"
+            },
+            "pinnedVersion": 2
+          },
+          {
+            "at": 1794499200000,
+            "atLocal": "2026-11-13T00:00:00+08:00",
+            "blocked": null,
+            "frozenMultiplier": 0.8,
+            "frozenRound": "climber",
+            "frozenRounds": [
+              "climber"
+            ],
+            "packageWouldSelect": {
+              "multiplier": 0.8,
+              "rounds": [
+                "climber"
+              ],
+              "winner": "climber"
+            },
+            "pinnedVersion": 2
+          },
+          {
+            "at": 1794531600000,
+            "atLocal": "2026-11-13T09:00:00+08:00",
+            "blocked": null,
+            "frozenMultiplier": 0.8,
+            "frozenRound": "climber",
+            "frozenRounds": [
+              "climber"
+            ],
+            "packageWouldSelect": {
+              "multiplier": 0.8,
+              "rounds": [
+                "climber"
+              ],
+              "winner": "climber"
+            },
+            "pinnedVersion": 2
+          },
+          {
+            "at": 1794585600000,
+            "atLocal": "2026-11-14T00:00:00+08:00",
+            "blocked": null,
+            "frozenMultiplier": 0.8,
+            "frozenRound": "climber",
+            "frozenRounds": [
+              "climber"
+            ],
+            "packageWouldSelect": {
+              "multiplier": 1,
+              "rounds": [],
+              "winner": null
+            },
+            "pinnedVersion": 2
+          },
+          {
+            "at": 1794628800000,
+            "atLocal": "2026-11-14T12:00:00+08:00",
+            "blocked": null,
+            "frozenMultiplier": 0.8,
+            "frozenRound": "climber",
+            "frozenRounds": [
+              "climber"
+            ],
+            "packageWouldSelect": {
+              "multiplier": 1,
+              "rounds": [],
+              "winner": null
+            },
+            "pinnedVersion": 2
+          }
+        ],
+        "scores": {
+          "a": 8,
+          "b": 8
+        }
+      }
+    ],
+    "to": 1794628800000,
+    "toLocal": "2026-11-14T12:00:00+08:00"
+  }
+}
